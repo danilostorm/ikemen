@@ -3,6 +3,11 @@
 -- Press Esc at any time to return to the title menu.
 local infinitewatch = {}
 
+-- Replace the temporary require sentinel immediately. This prevents the engine
+-- from reporting "loop or previous error loading module" when main.lua is
+-- reloaded after a completed match.
+package.loaded['external.script.infinitewatch'] = infinitewatch
+
 local function f_aiLevel()
 	local level = tonumber(config.Difficulty) or 8
 	return math.max(1, math.min(8, level))
@@ -89,10 +94,12 @@ function infinitewatch.run()
 		local stage = f_randomStage(previousStage)
 		start.f_setMusic(stage)
 		loadStart()
-		local winner = game()
+		game()
 		clearColor(0, 0, 0)
 
-		if winner < 0 or esc() then
+		-- endMatch() is also used after a normally completed match. Only Esc
+		-- should leave the infinite loop.
+		if esc() then
 			break
 		end
 
