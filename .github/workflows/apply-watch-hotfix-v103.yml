@@ -1,0 +1,101 @@
+name: Aplicar hotfix Watch Infinito v1.0.3
+
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-watch-hotfix-v103.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: false
+
+      - name: Corrigir scripts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p = Path('external/script/main.lua')
+          b = p.read_bytes()
+          old = b"infinitewatch = require('external.script.infinitewatch')"
+          new = b"infinitewatch = assert(loadfile('external/script/infinitewatch.lua'))()"
+          if old not in b:
+              raise SystemExit('Trecho antigo não encontrado em main.lua')
+          p.write_bytes(b.replace(old, new, 1))
+
+          p = Path('external/script/global.lua')
+          b = p.read_bytes()
+          nl = b'\r\n' if b'\r\n' in b else b'\n'
+          old = nl.join([
+              b'\t\tif not endFlag then',
+              b'\t\t\tresetMatchData(false)',
+              b'\t\t\tendFlag = true',
+              b'\t\tend',
+              b'\t\t--victory screen',
+          ]) + nl
+          new = nl.join([
+              b'\t\tif not endFlag then',
+              b'\t\t\tresetMatchData(false)',
+              b'\t\t\tendFlag = true',
+              b'\t\tend',
+              b'\t\t--watch infinito: encerra a partida finalizada e devolve o controle ao loop',
+              b"\t\tif gamemode('watch') then",
+              b'\t\t\tclearColor(motif.selectbgdef.bgclearcolor[1], motif.selectbgdef.bgclearcolor[2], motif.selectbgdef.bgclearcolor[3])',
+              b'\t\t\ttogglePostMatch(false)',
+              b'\t\t\tendMatch()',
+              b'\t\t\treturn',
+              b'\t\tend',
+              b'\t\t--victory screen',
+          ]) + nl
+          if old not in b:
+              raise SystemExit('Trecho antigo não encontrado em global.lua')
+          p.write_bytes(b.replace(old, new, 1))
+
+          p = Path('external/script/infinitewatch.lua')
+          b = p.read_bytes()
+          nl = b'\r\n' if b'\r\n' in b else b'\n'
+          old = nl.join([
+              b'\t\tlocal winner = game()',
+              b'\t\tclearColor(0, 0, 0)',
+              b'',
+              b'\t\tif winner < 0 or esc() then',
+              b'\t\t\tbreak',
+              b'\t\tend',
+          ]) + nl
+          new = nl.join([
+              b'\t\tgame()',
+              b'\t\tclearColor(0, 0, 0)',
+              b'',
+              b'\t\t--endMatch() também é usado após uma luta concluída normalmente.',
+              b'\t\t--Somente ESC deve sair do loop do Watch Infinito.',
+              b'\t\tif esc() then',
+              b'\t\t\tbreak',
+              b'\t\tend',
+          ]) + nl
+          if old not in b:
+              raise SystemExit('Trecho antigo não encontrado em infinitewatch.lua')
+          p.write_bytes(b.replace(old, new, 1))
+          PY
+
+      - name: Enviar correção
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add external/script/main.lua external/script/global.lua external/script/infinitewatch.lua
+          git commit -m 'Corrige fim de luta e carregamento do Watch Infinito'
+          git push origin HEAD:main
