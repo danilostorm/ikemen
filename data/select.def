@@ -1,0 +1,210 @@
+; Ikemen GO + Street Fighter Alpha/Zero
+; Gerado automaticamente em 2026-08-05.
+; A copia original deste arquivo esta em data/select.original.def.
+
+[Characters]
+; Personagens Street Fighter Alpha/Zero
+SFZ_Ryu/SFZ_Ryu.def, stages/Ryu.def, stages/Ryu2.def, stages/Ryu3.def, includestage=0, order=1
+SFZ_Ken/SFZ_Ken.def, stages/Ken.def, stages/Ken2.def, stages/Ken3.def, includestage=0, order=1
+SFZ_ChunLi-Z/SFZ_ChunLi-Z.def, stages/Chunli.def, stages/Chunli2.def, stages/Chunli3.def, includestage=0, order=1
+SFZ_ChunLi-X/SFZ_ChunLi-X.def, stages/Chunli.def, stages/Chunli2.def, stages/Chunli3.def, includestage=0, order=1
+SFZ_Adon/SFZ_Adon.def, stages/Adon.def, stages/Adon2.def, includestage=0, order=1
+SFZ_Akuma/SFZ_Akuma.def, stages/_Boss-Akuma2.def, stages/Gokuento.def, includestage=0, order=2
+SFZ_AkumaS/SFZ_AkumaS.def, stages/_Boss-Akuma2.def, stages/Gokuento.def, includestage=0, order=3
+SFZ_Balrog/SFZ_Balrog.def, stages/Balrog.def, includestage=0, order=1
+SFZ_Birdie/SFZ_Birdie.def, stages/Birdie.def, stages/Birdie2.def, includestage=0, order=1
+SFZ_Bison/SFZ_Bison.def, stages/Shadaloo.def, stages/_Boss-Shadaloo.def, includestage=0, order=3
+SFZ_Blanka/SFZ_Blanka.def, stages/Blanka.def, includestage=0, order=1
+SFZ_Cammy/SFZ_Cammy.def, stages/KillerBee.def, stages/KillerBee2.def, includestage=0, order=1
+SFZ_Charlie/SFZ_Charlie.def, stages/Charlie.def, stages/Charlie2.def, includestage=0, order=1
+SFZ_R-Charlie/SFZ_R-Charlie.def, stages/Charlie2.def, stages/_Boss-Charlie2.def, includestage=0, order=2
+SFZ_Cody-Z/SFZ_Cody-Z.def, stages/Cody-Z.def, includestage=0, order=1
+SFZ_Cody-X/SFZ_Cody-X.def, stages/Cody-X.def, includestage=0, order=1
+SFZ_Dan/SFZ_Dan.def, stages/Dan.def, stages/Dan2.def, includestage=0, order=1
+SFZ_Dhalsim/SFZ_Dhalsim.def, stages/Dhalsim.def, stages/Dhalsim2.def, includestage=0, order=1
+SFZ_DJ/SFZ_DJ.def, stages/DJ.def, stages/DJ2.def, includestage=0, order=1
+SFZ_E-Ryu/SFZ_E-Ryu.def, stages/Ryu3.def, stages/_Boss-Ryu3.def, includestage=0, order=2
+SFZ_FeiLong/SFZ_FeiLong.def, stages/FeiLong.def, includestage=0, order=1
+SFZ_Gen-Z/SFZ_Gen-Z.def, stages/Gen.def, stages/Gen2.def, includestage=0, order=1
+SFZ_Gen-X/SFZ_Gen-X.def, stages/Gen.def, stages/Gen2.def, includestage=0, order=1
+SFZ_Guile/SFZ_Guile.def, stages/Guile.def, includestage=0, order=1
+SFZ_Guy/SFZ_Guy.def, stages/Guy.def, stages/Guy2.def, includestage=0, order=1
+SFZ_Honda/SFZ_Honda.DEF, stages/Honda.def, stages/Honda2.def, stages/Honda3.def, includestage=0, order=1
+SFZ_Juli/SFZ_Juli.def, stages/Dolls.def, stages/Dolls2.def, includestage=0, order=1
+SFZ_Juni/SFZ_Juni.def, stages/Dolls.def, stages/Dolls2.def, includestage=0, order=1
+SFZ_Karin/SFZ_Karin.def, stages/Karin.def, stages/Karin2.def, includestage=0, order=1
+SFZ_Kbee/SFZ_Kbee.def, stages/KillerBee.def, stages/KillerBee2.def, includestage=0, order=1
+SFZ_Mika/SFZ_Mika.def, stages/Mika.def, includestage=0, order=1
+SFZ_Mike/SFZ_Mike.def, stages/Mike.def, includestage=0, order=1
+SFZ_N-Bison/SFZ_N-Bison.def, stages/_Boss-Shadaloo.def, stages/Vtol.def, includestage=0, order=2
+SFZ_Rolento/SFZ_Rolento.def, stages/Rolento.def, stages/Rolento2.def, includestage=0, order=1
+SFZ_Rose/SFZ_Rose.def, stages/Rose.def, stages/Rose2.def, stages/Rose3.def, includestage=0, order=1
+SFZ_Sagat/SFZ_Sagat.def, stages/Sagat.def, stages/Sagat2.def, includestage=0, order=1
+SFZ_U-Sagat/SFZ_U-Sagat.def, stages/_Boss-Sagat.def, stages/_Boss-Sagat2.def, includestage=0, order=2
+SFZ_Sakura/SFZ_Sakura.def, stages/Sakura.def, stages/Sakura2.def, includestage=0, order=1
+SFZ_D-Sakura/SFZ_D-Sakura.def, stages/_Boss-Sakura.def, stages/_Boss-Sakura2.def, includestage=0, order=2
+SFZ_Sodom-Z/SFZ_Sodom-Z.def, stages/Sodom-Z.def, includestage=0, order=1
+SFZ_Sodom-X/SFZ_Sodom-X.def, stages/Sodom-X.def, includestage=0, order=1
+SFZ_T-Hawk/SFZ_T-Hawk.def, stages/Mexico.def, stages/Outbacks.def, includestage=0, order=1
+SFZ_V-Ken/SFZ_V-Ken.def, stages/_Boss-Ken3.def, stages/Ken3.def, includestage=0, order=2
+SFZ_Vega/SFZ_Vega.def, stages/Vega.def, includestage=0, order=1
+SFZ_Zangief/SFZ_Zangief.def, stages/Zangief.def, stages/Zangief2.def, includestage=0, order=1
+
+; Personagens de teste originais do Ikemen
+kfm_zss, stages/kfm.def, includestage=0, order=0
+kfm720, stages/kfm.def, includestage=0, order=0
+kfm_zaxis, stages/kfm.def, includestage=0, order=0
+randomselect
+
+[ExtraStages]
+; Fases Street Fighter Alpha/Zero
+stages/_Boss-Adon.def
+stages/_Boss-Adon2.def
+stages/_Boss-Africa.def
+stages/_Boss-Akuma2.def
+stages/_Boss-Balrog.def
+stages/_Boss-Birdie.def
+stages/_Boss-Birdie2.def
+stages/_Boss-Blanka.def
+stages/_Boss-Buddha.def
+stages/_Boss-Cammy.def
+stages/_Boss-Charlie.def
+stages/_Boss-Charlie2.def
+stages/_Boss-Chunli.def
+stages/_Boss-Chunli2.def
+stages/_Boss-Chunli3.def
+stages/_Boss-Cody-X.def
+stages/_Boss-Cody-Z.def
+stages/_Boss-Dan.def
+stages/_Boss-Dan2.def
+stages/_Boss-Dhalsim.def
+stages/_Boss-Dhalsim2.def
+stages/_Boss-Dolls.def
+stages/_Boss-Dolls2.def
+stages/_Boss-Gen.def
+stages/_Boss-Gen2.def
+stages/_Boss-Gokuento.def
+stages/_Boss-Guile.def
+stages/_Boss-Guy.def
+stages/_Boss-Guy2.def
+stages/_Boss-Honda.def
+stages/_Boss-Honda2.def
+stages/_Boss-Honda3.def
+stages/_Boss-Karin.def
+stages/_Boss-Karin2.def
+stages/_Boss-Ken.def
+stages/_Boss-Ken2.def
+stages/_Boss-Ken3.def
+stages/_Boss-KillerBee.def
+stages/_Boss-Mika.def
+stages/_Boss-Mike.def
+stages/_Boss-Outbacks.def
+stages/_Boss-Rolento.def
+stages/_Boss-Rolento2.def
+stages/_Boss-Rose.def
+stages/_Boss-Rose2.def
+stages/_Boss-Ryu.def
+stages/_Boss-Ryu2.def
+stages/_Boss-Ryu3.def
+stages/_Boss-Sagat.def
+stages/_Boss-Sagat2.def
+stages/_Boss-Sakura.def
+stages/_Boss-Sakura2.def
+stages/_Boss-Shadaloo.def
+stages/_Boss-Sodom-X.def
+stages/_Boss-Sodom-Z.def
+stages/_Boss-Vega.def
+stages/_Boss-Venezuela.def
+stages/_Boss-Vtol.def
+stages/_Boss-Zangief.def
+stages/_Boss-Zangief2.def
+stages/Adon.def
+stages/Adon2.def
+stages/Africa.def
+stages/Balrog.def
+stages/Birdie.def
+stages/Birdie2.def
+stages/Blanka.def
+stages/BuddhaEvening.def
+stages/BuddhaNight.def
+stages/Charlie.def
+stages/Charlie2.def
+stages/Chunli.def
+stages/Chunli2.def
+stages/Chunli3.def
+stages/Cody-X.def
+stages/Cody-Z.def
+stages/Dan.def
+stages/Dan2.def
+stages/Dhalsim.def
+stages/Dhalsim2.def
+stages/DJ.def
+stages/DJ2.def
+stages/Dolls.def
+stages/Dolls2.def
+stages/FeiLong.def
+stages/Gen.def
+stages/Gen2.def
+stages/genreflection.def
+stages/Gokuento.def
+stages/Guile.def
+stages/Guy.def
+stages/Guy2.def
+stages/Honda.def
+stages/Honda2.def
+stages/Honda3.def
+stages/Karin.def
+stages/Karin2.def
+stages/Ken.def
+stages/Ken2.def
+stages/Ken3.def
+stages/KillerBee.def
+stages/KillerBee2.def
+stages/London.def
+stages/Mexico.def
+stages/Mika.def
+stages/Mike.def
+stages/OniFangYellow.def
+stages/Outbacks.def
+stages/Rolento.def
+stages/Rolento2.def
+stages/Rose.def
+stages/Rose2.def
+stages/Rose3.def
+stages/Ryu.def
+stages/Ryu2.def
+stages/Ryu3.def
+stages/Sagat.def
+stages/Sagat2.def
+stages/Sakura.def
+stages/Sakura2.def
+stages/Secret-Blue.def
+stages/Secret-Green.def
+stages/Secret-Red.def
+stages/Shadaloo.def
+stages/Sodom-X.def
+stages/Sodom-Z.def
+stages/Vega.def
+stages/Venezuela.def
+stages/Vtol.def
+stages/Zangief.def
+stages/Zangief2.def
+
+; Fases originais do Ikemen
+stages/stage1.def
+stages/stage3d.def
+stages/stage3d_outline.def
+stages/stageZ.def
+stages/interactivestage.def
+stages/kfm.def
+stages/stage0.def
+stages/stage0-720.def
+
+[Options]
+; 6 adversarios comuns, 2 especiais e 1 chefe.
+arcade.maxmatches = 6,2,1,0,0,0,0,0,0,0
+team.maxmatches = 4,1,1,0,0,0,0,0,0,0
+timeattack.maxmatches = 6,2,1,0,0,0,0,0,0,0
+survival.maxmatches = -1,0,0,0,0,0,0,0,0,0
+
+[StoryMode]
