@@ -1,0 +1,21 @@
+STREET FIGHTER ALPHA ZERO - VERSAO COMPLETA
+
+Para iniciar, execute:
+  INICIAR_JOGO.bat
+ou diretamente:
+  Street Fighter AZ.exe
+
+IMPORTANTE:
+Nao use o Ikemen_GO.exe padrao com este jogo. Esta montagem utiliza um
+executavel personalizado que oferece recursos exigidos pelos personagens,
+incluindo o gatilho inDialogue. O uso do executavel padrao causa o erro:
+"Invalid data: indialogue".
+
+Integracao realizada a partir dos dois pacotes fornecidos:
+- chars, stages e sound
+- data, external, font, arcadepath, save e Street Fighter AZ.exe
+
+Correcao adicional:
+A fase stages/_Boss-Mike.def apontava para uma musica ausente.
+A referencia foi alterada para sound/Mike.mp3. A versao original da fase
+foi preservada como stages/_Boss-Mike.original.def.

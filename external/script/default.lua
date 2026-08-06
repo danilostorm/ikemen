@@ -4,11 +4,11 @@ if not main.makeRoster then
 	return
 end
 
-if main.storyboard.intro and matchNo() == 1 and not continued() then
+if main.storyboard.intro and matchno() == 1 and not continue() then
 	launchStoryboard(start.f_getCharData(start.p[1].t_selected[1].ref).intro)
 end
 
-for i = matchNo(), #start.t_roster do
+for i = matchno(), #start.t_roster do
 	if start.t_roster[i][1] == -1 then --infinite matches flag detected
 		return --restart lua script after appending new entries
 	end
@@ -21,7 +21,7 @@ for i = matchNo(), #start.t_roster do
 end
 
 if main.storyboard.ending then
-	if not launchStoryboard(start.f_getCharData(start.p[1].t_selected[1].ref).ending) and motif.default_ending.enabled then
+	if not launchStoryboard(start.f_getCharData(start.p[1].t_selected[1].ref).ending) and motif.default_ending.enabled == 1 then
 		launchStoryboard(motif.default_ending.storyboard)
 	end
 end

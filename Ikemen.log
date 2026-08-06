@@ -1,0 +1,12 @@
+.\external\script\storyboard.lua:117: <game end>
+stack traceback:
+	[G]: in function 'refresh'
+	.\external\script\storyboard.lua:117: in function 'f_play'
+	.\external\script\storyboard.lua:449: in function 'f_storyboard'
+	.\external\script\start.lua:1953: in function 'launchStoryboard'
+	./arcadepath/kumitepath.lua:608: in function <./arcadepath/kumitepath.lua:0>
+	.\external\script\start.lua:1498: in function 'f'
+	external/script/main.lua:3122: in function 'loop'
+	external/script/main.lua:3680: in function 'f_attractMode'
+	external/script/main.lua:4172: in main chunk
+	[G]: ?

@@ -1,0 +1,29 @@
+Copy Paste common1.cns in Add004/SVC/Bs0 Folders to Data
+Change Config.json to read Add004 files accordingly to name
+use jump file if you want characters to tagout while jumpin or run file 
+ "CommonAir": [
+    "data/add004/common.air"
+  ],
+  "CommonCmd": [
+    "data/add004/common.cmd"
+  ],
+  "CommonConst": [
+    "data/add004/common.const"
+  ],
+  "CommonFx": [],
+  "CommonLua": [
+    "loop()"
+  ],
+  "CommonStates": [
+    "data/functions.zss",
+    "data/action.zss",
+    "data/dizzy.zss",
+    "data/guardbreak.zss",
+    "data/score.zss",
+    "data/training.zss",
+    "data/add004/a4b_helper.zss",
+    "data/add004/a4b_helper_proj.zss",
+    "data/add004/a4b_main.zss",
+    "data/add004/a4b_tagJump.zss",
+    "data/TagStates.cns",
+  ],
