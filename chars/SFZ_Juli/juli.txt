@@ -1,0 +1,62 @@
+Readme File For Juli v 0.96
+By: Mugen Institute
+URL: http://www.geocities.com/mugen_institute/
+Date: 7/15/2001
+
+What's Done:
+	All Standard Attacks
+
+	All Special Attacks:
+	   Cannon Spike
+	   Spiral Arrow
+	   Spin Knuckle
+	   Sniping Arrow
+	   Psycho Charge Alpha (Life Add)
+	   Psycho Charge Gamma (Power Add)
+	
+	Supers:
+	   Spin Drive Smasher
+	   Reverse Shaft Breaker
+	   Psycho Streak
+	   Death Cross Dancing
+	
+	NEW Supers
+	   Cross Crushaa (Three Way Super Including Bison, Juni & Juli)
+	
+	All required frames are in
+	
+	All Clsn 1&2's are in and accounted for
+
+What's Left:
+	Crouch turn and standing turn are missing...
+	More specials and supers are planned =)
+	Planning on adding the button mashing bit to the RSB for more hits and damage heehee
+	Need to add vertical slowdown on RSB for higher than 1/2 way up.
+
+MOVE LIST
+Specials:
+	Spiral Arrow - D, DF, F, K
+	Sniping Arrow - D, DB, B, K
+	Spin Knuckle - F, DF, D, DB, B, P
+	Cannon Spike - F, D, DF, K
+	Psycho Charge Alpha - x+y+z
+	Psycho Charge Gamma - a+b+c
+
+Supers:
+	Spin Drive Smasher - D, DF, F, D, DF, F, K
+	Reverse Shaft Breaker - D, DB, B, D, DB, B, K
+	Cross Crushaa - D, DF, F, D, DF, F, P
+	Death Cross Dancing - D, DB, B, D, DB, B, x, y or z (Level 3 only)
+	Psycho Streak - Charge B for 1 second, F, B, F, P
+
+Thank You's
+Whoever made Juni... It gave me the incentive to get the second doll up and running =)
+Jin Kazama & Angel Myst - By taking a look at how they did Cammy's Spin Knuckle, I figgered out a better trigger than I had... (Trigger1 = animelem = 5, >=0) That fixed ALL of my velocity problems =)
+Willoughby Jackson - He didn't help me on this project, but since he has helped me TONS in the past, I am still thanking him! HAHAHA!
+Capcom - They may not be geniuses when it comes to storyline, but they make damn good characters! If not for them, this doll would not be ripped!
+Elecbyte - If i need to explain, you should be playing and not bothering to read this readme like the rest of the ignorant ppl out there.
+
+
+
+Contact
+You can contact me at the following addy: mugen_institute@yahoo.com with any questions, complaints or praises.

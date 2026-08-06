@@ -1,0 +1,25 @@
+[Info]
+name = "Ryu"
+displayname = "RYU"
+author = "Adamskie"
+mugenversion = 1.0
+Pal.Defaults = 11
+Localcoord = 384,224
+
+[Files]
+cmd      = SFZ_Ryu.cmd
+cns      = SFZ_Ryu.cns
+st       = SFZ_Ryu.cns
+stcommon = common1.cns
+sprite   = SFZ_Ryu.sff
+anim     = SFZ_Ryu.air
+sound    = SFZ_Ryu.snd 
+movelist = movelist.dat
+
+pal1     = Pals/Ryu11.act
+
+[Arcade]
+intro.storyboard = Intros/Intro_Ryu.def
+ending.storyboard = Storyboards/Credits.def
+ratiopath = arcadepath/kumitepath.lua
+arcadepath = arcadepath/Ryu.lua

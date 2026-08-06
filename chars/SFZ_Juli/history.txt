@@ -1,0 +1,63 @@
+*****************************************************************
+***Juli for MUGEN ver 11.29.2000 History           **************
+*****************************************************************
+
+***** V. 0.97 ***************************************************
+- Overhauled Spin Drive Smasher
+- Overhauled Reverse Shaft Breaker
+- Added Hit and Guard Sparks
+- Added 3 New Super Splash Screens - Vertical, Horizontal & Red Sunburst
+- Added 3 new special intros... V.S. Bison, Akuma/Gouki, and Dark Chun Li
+- Added proper crouching strong punch animation =P (how the hell could i mess that up? lol)
+- Fixed some sound issues brought to my attention
+
+***** V. 0.96 ***************************************************
+- Tweaked Sniping Arrow velocities and they appear to be right!
+- Added new move - Psycho Charge Alpha (Life Add)
+- Added new move - Psycho Charge Gamma (Power Bar Add)
+- Added new super - Psycho Streak
+- Added new super - Death Cross Dancing
+- 2 new palettes - Black and Silver
+- AI tweaked a bit to acommidate the new moves and supers
+- Cannot do supers involving Bison when FIGHTING Bison
+- Tweaked damage values AGAIN
+- Added hop back
+
+***** V. 0.95 ***************************************************
+- Velocities fixed in Cannon Spike
+- Velocities fixed in Spiral Arrow
+- Super Portrait now scrolls in as opposed as to being a basic explod
+- Spin Drive Smasher now acts more like it's SFA3 counterpart
+- Spin Drive Smasher now does realitivly the correct damage and number of hits
+- Reverse Shaft Breaker now sucks the opponent in when it hits
+- Reverse Shaft Breaker damage fixed
+- Reverse Shaft Breaker Hit Counts revamped... L1=7 hits L2=9 hits L3=11 hits
+- Basic Attacks now have the correct animation timing
+- All Poweradd values revamped
+- All Damage values revamped
+- Delay in Cross Crushaa fixed for Juli's jump in part
+- Implemented basic combo system so chains are now possible
+- Added a basic AI so CPU is smarter (Blocks more and pulls off supers when she has the power)
+- Realigned axis for walking and  jumping animations
+- Fixed super pause timing (TY Sunboy)
+- Spiral Arrow infinite juggle removed
+- Added Throws
+- Added Super KO Splash Screens (Thanx Vic for gettin em fer me if ya bother to read this =P)
+- Redid timing and velocities for jumps... still looks a bit off tho...
+- Sped up the standing animation by one tick per frame... it looks proper now 
+- Redid animation for taunt. It now animates much smoother.
+- Redid all 6 palettes. Now the outer edges on the lighter colored palettes blend like in SFA3.
+- Cannon Spike command is now F, D, F, x, y or z.
+
+***** -Initial Release V. 0.90 **********************************
+- All required frames added
+- Basic coding done
+- All Specials added
+- All Supers added
+- New Super - Cross Crushaa added
+
+***** What's Left ***********************************************
+- Need to add Psycho Rolling super.
+- Need to get whirlwhind sprites for around Psycho Charge Gamma.
+- Anything else I can come up with =).
+- Fix any bugs that may be reported.

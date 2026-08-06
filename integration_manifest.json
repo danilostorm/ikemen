@@ -1,0 +1,1586 @@
+{
+  "ikemen_version": "1.0.0-rc.2 Windows",
+  "street_fighter_characters": 45,
+  "street_fighter_stages": 131,
+  "total_selectable_characters": 48,
+  "characters": [
+    {
+      "directory": "SFZ_Ryu",
+      "def": "SFZ_Ryu.def",
+      "displayname": "RYU",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Ken",
+      "def": "SFZ_Ken.def",
+      "displayname": "KEN",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_ChunLi-Z",
+      "def": "SFZ_ChunLi-Z.def",
+      "displayname": "CHUN-LI",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_ChunLi-X",
+      "def": "SFZ_ChunLi-X.def",
+      "displayname": "CHUN-LI",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Adon",
+      "def": "SFZ_Adon.def",
+      "displayname": "ADON",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Akuma",
+      "def": "SFZ_Akuma.def",
+      "displayname": "AKUMA",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_AkumaS",
+      "def": "SFZ_AkumaS.def",
+      "displayname": "AKUMA",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Balrog",
+      "def": "SFZ_Balrog.def",
+      "displayname": "BALROG",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Birdie",
+      "def": "SFZ_Birdie.def",
+      "displayname": "BIRDIE",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Bison",
+      "def": "SFZ_Bison.def",
+      "displayname": "M.BISON",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Blanka",
+      "def": "SFZ_Blanka.def",
+      "displayname": "BLANKA",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Cammy",
+      "def": "SFZ_Cammy.def",
+      "displayname": "CAMMY",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Charlie",
+      "def": "SFZ_Charlie.def",
+      "displayname": "CHARLIE",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_R-Charlie",
+      "def": "SFZ_R-Charlie.def",
+      "displayname": "CHARLIE",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Cody-Z",
+      "def": "SFZ_Cody-Z.def",
+      "displayname": "CODY",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Cody-X",
+      "def": "SFZ_Cody-X.def",
+      "displayname": "CODY",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Dan",
+      "def": "SFZ_Dan.def",
+      "displayname": "DAN",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Dhalsim",
+      "def": "SFZ_Dhalsim.def",
+      "displayname": "DHALSIM",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_DJ",
+      "def": "SFZ_DJ.def",
+      "displayname": "DEE JAY",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_E-Ryu",
+      "def": "SFZ_E-Ryu.def",
+      "displayname": "RYU",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_FeiLong",
+      "def": "SFZ_FeiLong.def",
+      "displayname": "FEI-LONG",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Gen-Z",
+      "def": "SFZ_Gen-Z.def",
+      "displayname": "GEN",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Gen-X",
+      "def": "SFZ_Gen-X.def",
+      "displayname": "GEN",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Guile",
+      "def": "SFZ_Guile.def",
+      "displayname": "GUILE",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Guy",
+      "def": "SFZ_Guy.def",
+      "displayname": "GUY",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Honda",
+      "def": "SFZ_Honda.DEF",
+      "displayname": "E.HONDA",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Juli",
+      "def": "SFZ_Juli.def",
+      "displayname": "JULI",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Juni",
+      "def": "SFZ_Juni.def",
+      "displayname": "JUNI",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Karin",
+      "def": "SFZ_Karin.def",
+      "displayname": "KARIN",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Kbee",
+      "def": "SFZ_Kbee.def",
+      "displayname": "CAMMY",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Mika",
+      "def": "SFZ_Mika.def",
+      "displayname": "R.MIKA",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Mike",
+      "def": "SFZ_Mike.def",
+      "displayname": "MIKE",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_N-Bison",
+      "def": "SFZ_N-Bison.def",
+      "displayname": "M.BISON",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Rolento",
+      "def": "SFZ_Rolento.def",
+      "displayname": "ROLENTO",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Rose",
+      "def": "SFZ_Rose.def",
+      "displayname": "ROSE",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Sagat",
+      "def": "SFZ_Sagat.def",
+      "displayname": "SAGAT",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_U-Sagat",
+      "def": "SFZ_U-Sagat.def",
+      "displayname": "SAGAT",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Sakura",
+      "def": "SFZ_Sakura.def",
+      "displayname": "SAKURA",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_D-Sakura",
+      "def": "SFZ_D-Sakura.def",
+      "displayname": "SAKURA",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Sodom-Z",
+      "def": "SFZ_Sodom-Z.def",
+      "displayname": "SODOM",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Sodom-X",
+      "def": "SFZ_Sodom-X.def",
+      "displayname": "SODOM",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_T-Hawk",
+      "def": "SFZ_T-Hawk.def",
+      "displayname": "T.HAWK",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_V-Ken",
+      "def": "SFZ_V-Ken.def",
+      "displayname": "KEN",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Vega",
+      "def": "SFZ_Vega.def",
+      "displayname": "VEGA",
+      "files_checked": 19
+    },
+    {
+      "directory": "SFZ_Zangief",
+      "def": "SFZ_Zangief.def",
+      "displayname": "ZANGIEF",
+      "files_checked": 19
+    }
+  ],
+  "stages": [
+    {
+      "def": "_Boss-Adon.def",
+      "sprites": [
+        "stages/Adon.sff"
+      ],
+      "music": [
+        "Sound/Adon.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Adon2.def",
+      "sprites": [
+        "stages/Adon2.sff"
+      ],
+      "music": [
+        "sound/Adon2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Africa.def",
+      "sprites": [
+        "stages/Africa.sff"
+      ],
+      "music": [
+        "sound/Ryu.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Akuma2.def",
+      "sprites": [
+        "stages/OniFangYellow.sff"
+      ],
+      "music": [
+        "sound/Shin Akuma.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Balrog.def",
+      "sprites": [
+        "stages/Balrog.sff"
+      ],
+      "music": [
+        "sound/Balrog.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Birdie.def",
+      "sprites": [
+        "stages/Birdie.sff"
+      ],
+      "music": [
+        "Sound/Birdie.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Birdie2.def",
+      "sprites": [
+        "stages/Birdie2.sff"
+      ],
+      "music": [
+        "sound/Eagle.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Blanka.def",
+      "sprites": [
+        "stages/Blanka.sff"
+      ],
+      "music": [
+        "Sound/Blanka.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Buddha.def",
+      "sprites": [
+        "stages/BuddhaNight.sff"
+      ],
+      "music": [
+        "sound/Sagat2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Cammy.def",
+      "sprites": [
+        "stages/London.sff"
+      ],
+      "music": [
+        "Sound/Cammy2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Charlie.def",
+      "sprites": [
+        "stages/Charlie.sff"
+      ],
+      "music": [
+        "Sound/Charlie.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Charlie2.def",
+      "sprites": [
+        "stages/Charlie2.sff"
+      ],
+      "music": [
+        "sound/Charlie2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Chunli.def",
+      "sprites": [
+        "stages/Chunli.sff"
+      ],
+      "music": [
+        "Sound/Chun3.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Chunli2.def",
+      "sprites": [
+        "stages/Chunli2.sff"
+      ],
+      "music": [
+        "Sound/Chun.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Chunli3.def",
+      "sprites": [
+        "stages/Chunli3.sff"
+      ],
+      "music": [
+        "Sound/Chun2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Cody-X.def",
+      "sprites": [
+        "stages/Cody-X.sff"
+      ],
+      "music": [
+        "Sound/Cody.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Cody-Z.def",
+      "sprites": [
+        "stages/Cody-Z.sff"
+      ],
+      "music": [
+        "sound/Cody.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Dan.def",
+      "sprites": [
+        "stages/Dan.sff"
+      ],
+      "music": [
+        "sound/Dan.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Dan2.def",
+      "sprites": [
+        "stages/Dan2.sff"
+      ],
+      "music": [
+        "Sound/Dan2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Dhalsim.def",
+      "sprites": [
+        "stages/Dhalsim.sff"
+      ],
+      "music": [
+        "sound/Dhalsim.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Dhalsim2.def",
+      "sprites": [
+        "stages/Dhalsim2.sff"
+      ],
+      "music": [
+        "Sound/Dhalsim2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Dolls.def",
+      "sprites": [
+        "stages/Dolls.sff"
+      ],
+      "music": [
+        "sound/Dolls.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Dolls2.def",
+      "sprites": [
+        "stages/Dolls2.sff"
+      ],
+      "music": [
+        "sound/Dolls.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Gen.def",
+      "sprites": [
+        "stages/Gen.sff"
+      ],
+      "music": [
+        "Sound/Gen2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Gen2.def",
+      "sprites": [
+        "stages/Gen2.sff"
+      ],
+      "music": [
+        "Sound/Gen.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Gokuento.def",
+      "sprites": [
+        "stages/Gokuento.sff"
+      ],
+      "music": [
+        "Sound/Akuma.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Guile.def",
+      "sprites": [
+        "stages/Guile.sff"
+      ],
+      "music": [
+        "Sound/Guile.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Guy.def",
+      "sprites": [
+        "stages/Guy.sff"
+      ],
+      "music": [
+        "Sound/Guy.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Guy2.def",
+      "sprites": [
+        "stages/Guy2.sff"
+      ],
+      "music": [
+        "sound/Blanka2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Honda.def",
+      "sprites": [
+        "stages/Honda.sff"
+      ],
+      "music": [
+        "sound/Honda.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Honda2.def",
+      "sprites": [
+        "stages/Honda2.sff"
+      ],
+      "music": [
+        "sound/Honda2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Honda3.def",
+      "sprites": [
+        "stages/Honda3.sff"
+      ],
+      "music": [
+        "sound/Honda2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Karin.def",
+      "sprites": [
+        "stages/Karin.sff"
+      ],
+      "music": [
+        "Sound/Karin.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Karin2.def",
+      "sprites": [
+        "stages/Karin2.sff"
+      ],
+      "music": [
+        "Sound/Karin.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Ken.def",
+      "sprites": [
+        "stages/Ken.sff"
+      ],
+      "music": [
+        "sound/Ken2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Ken2.def",
+      "sprites": [
+        "stages/Ken2.sff"
+      ],
+      "music": [
+        "sound/Ken.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Ken3.def",
+      "sprites": [
+        "stages/Ken3.sff"
+      ],
+      "music": [
+        "sound/Ken.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-KillerBee.def",
+      "sprites": [
+        "stages/KillerBee.sff"
+      ],
+      "music": [
+        "Sound/Cammy.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Mika.def",
+      "sprites": [
+        "stages/Mika.sff"
+      ],
+      "music": [
+        "sound/RMika.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Mike.def",
+      "sprites": [
+        "Mike.sff"
+      ],
+      "music": [
+        "sound/Mike.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Outbacks.def",
+      "sprites": [
+        "stages/Outbacks.sff"
+      ],
+      "music": [
+        "sound/Sagat2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Rolento.def",
+      "sprites": [
+        "stages/Rolento.sff"
+      ],
+      "music": [
+        "Sound/Rolento.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Rolento2.def",
+      "sprites": [
+        "stages/Rolento2.sff"
+      ],
+      "music": [
+        "sound/Rolento2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Rose.def",
+      "sprites": [
+        "stages/Rose.sff"
+      ],
+      "music": [
+        "sound/Rose.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Rose2.def",
+      "sprites": [
+        "stages/Rose2.sff"
+      ],
+      "music": [
+        "sound/Rose2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Ryu.def",
+      "sprites": [
+        "stages/Ryu.sff"
+      ],
+      "music": [
+        "sound/Ryu.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Ryu2.def",
+      "sprites": [
+        "stages/Ryu2.sff"
+      ],
+      "music": [
+        "sound/Ryu3.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Ryu3.def",
+      "sprites": [
+        "stages/Ryu3.sff"
+      ],
+      "music": [
+        "sound/Ryu2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Sagat.def",
+      "sprites": [
+        "stages/Sagat.sff"
+      ],
+      "music": [
+        "Sound/Sagat.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Sagat2.def",
+      "sprites": [
+        "stages/Sagat2.sff"
+      ],
+      "music": [
+        "sound/Sagat3.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Sakura.def",
+      "sprites": [
+        "stages/Sakura.sff"
+      ],
+      "music": [
+        "Sound/Sakura.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Sakura2.def",
+      "sprites": [
+        "stages/Sakura2.sff"
+      ],
+      "music": [
+        "Sound/D-Sakura.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Shadaloo.def",
+      "sprites": [
+        "stages/Shadaloo.sff"
+      ],
+      "music": [
+        "sound/ViolentEvil.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Sodom-X.def",
+      "sprites": [
+        "stages/Sodom-X.sff"
+      ],
+      "music": [
+        "sound/Sodom2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Sodom-Z.def",
+      "sprites": [
+        "stages/Sodom-Z.sff"
+      ],
+      "music": [
+        "sound/Sodom.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Vega.def",
+      "sprites": [
+        "stages/Vega.sff"
+      ],
+      "music": [
+        "Sound/Vega2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Venezuela.def",
+      "sprites": [
+        "stages/Venezuela.sff"
+      ],
+      "music": [
+        "sound/Secret.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Vtol.def",
+      "sprites": [
+        "stages/Vtol.sff"
+      ],
+      "music": [
+        "Sound/Bison.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Zangief.def",
+      "sprites": [
+        "stages/Zangief.sff"
+      ],
+      "music": [
+        "Sound/Zangief.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "_Boss-Zangief2.def",
+      "sprites": [
+        "stages/Zangief2.sff"
+      ],
+      "music": [
+        "sound/Zangief2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Adon.def",
+      "sprites": [
+        "stages/Adon.sff"
+      ],
+      "music": [
+        "Sound/Adon.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Adon2.def",
+      "sprites": [
+        "stages/Adon2.sff"
+      ],
+      "music": [
+        "sound/Adon2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Africa.def",
+      "sprites": [
+        "stages/Africa.sff"
+      ],
+      "music": [
+        "sound/Secret.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Balrog.def",
+      "sprites": [
+        "stages/Balrog.sff"
+      ],
+      "music": [
+        "sound/Balrog.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Birdie.def",
+      "sprites": [
+        "stages/Birdie.sff"
+      ],
+      "music": [
+        "Sound/Birdie.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Birdie2.def",
+      "sprites": [
+        "stages/Birdie2.sff"
+      ],
+      "music": [
+        "sound/Eagle.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Blanka.def",
+      "sprites": [
+        "stages/Blanka.sff"
+      ],
+      "music": [
+        "Sound/Blanka.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "BuddhaEvening.def",
+      "sprites": [
+        "stages/BuddhaEvening.sff"
+      ],
+      "music": [
+        "Sound/Adon.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "BuddhaNight.def",
+      "sprites": [
+        "stages/BuddhaNight.sff"
+      ],
+      "music": [
+        "sound/Sagat2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Charlie.def",
+      "sprites": [
+        "stages/Charlie.sff"
+      ],
+      "music": [
+        "Sound/Charlie.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Charlie2.def",
+      "sprites": [
+        "stages/Charlie2.sff"
+      ],
+      "music": [
+        "sound/Charlie2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Chunli.def",
+      "sprites": [
+        "stages/Chunli.sff"
+      ],
+      "music": [
+        "Sound/Chun3.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Chunli2.def",
+      "sprites": [
+        "stages/Chunli2.sff"
+      ],
+      "music": [
+        "Sound/Chun.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Chunli3.def",
+      "sprites": [
+        "stages/Chunli3.sff"
+      ],
+      "music": [
+        "Sound/Chun2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Cody-X.def",
+      "sprites": [
+        "stages/Cody-X.sff"
+      ],
+      "music": [
+        "Sound/Cody.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Cody-Z.def",
+      "sprites": [
+        "stages/Cody-Z.sff"
+      ],
+      "music": [
+        "sound/Cody.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Dan.def",
+      "sprites": [
+        "stages/Dan.sff"
+      ],
+      "music": [
+        "sound/Dan.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Dan2.def",
+      "sprites": [
+        "stages/Dan2.sff"
+      ],
+      "music": [
+        "Sound/Dan2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Dhalsim.def",
+      "sprites": [
+        "stages/Dhalsim.sff"
+      ],
+      "music": [
+        "sound/Dhalsim.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Dhalsim2.def",
+      "sprites": [
+        "stages/Dhalsim2.sff"
+      ],
+      "music": [
+        "Sound/Dhalsim2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "DJ.def",
+      "sprites": [
+        "stages/DJ.sff"
+      ],
+      "music": [
+        "sound/DJ.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "DJ2.def",
+      "sprites": [
+        "stages/DJ2.sff"
+      ],
+      "music": [
+        "sound/DJ.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Dolls.def",
+      "sprites": [
+        "stages/Dolls.sff"
+      ],
+      "music": [
+        "sound/Dolls.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Dolls2.def",
+      "sprites": [
+        "stages/Dolls2.sff"
+      ],
+      "music": [
+        "sound/Dolls.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "FeiLong.def",
+      "sprites": [
+        "stages/FeiLong.sff"
+      ],
+      "music": [
+        "Sound/Feilong.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Gen.def",
+      "sprites": [
+        "stages/Gen.sff"
+      ],
+      "music": [
+        "Sound/Gen2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Gen2.def",
+      "sprites": [
+        "stages/Gen2.sff"
+      ],
+      "music": [
+        "Sound/Gen.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "genreflection.def",
+      "sprites": [],
+      "music": []
+    },
+    {
+      "def": "Gokuento.def",
+      "sprites": [
+        "stages/Gokuento.sff"
+      ],
+      "music": [
+        "Sound/Akuma.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Guile.def",
+      "sprites": [
+        "stages/Guile.sff"
+      ],
+      "music": [
+        "Sound/Guile.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Guy.def",
+      "sprites": [
+        "stages/Guy.sff"
+      ],
+      "music": [
+        "Sound/Guy.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Guy2.def",
+      "sprites": [
+        "stages/Guy2.sff"
+      ],
+      "music": [
+        "sound/Blanka2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Honda.def",
+      "sprites": [
+        "stages/Honda.sff"
+      ],
+      "music": [
+        "sound/Honda.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Honda2.def",
+      "sprites": [
+        "stages/Honda2.sff"
+      ],
+      "music": [
+        "sound/Honda2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Honda3.def",
+      "sprites": [
+        "stages/Honda3.sff"
+      ],
+      "music": [
+        "sound/Honda2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Karin.def",
+      "sprites": [
+        "stages/Karin.sff"
+      ],
+      "music": [
+        "Sound/Karin.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Karin2.def",
+      "sprites": [
+        "stages/Karin2.sff"
+      ],
+      "music": [
+        "Sound/Karin.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Ken.def",
+      "sprites": [
+        "stages/Ken.sff"
+      ],
+      "music": [
+        "sound/Ken2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Ken2.def",
+      "sprites": [
+        "stages/Ken2.sff"
+      ],
+      "music": [
+        "sound/Ken.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Ken3.def",
+      "sprites": [
+        "stages/Ken3.sff"
+      ],
+      "music": [
+        "sound/Ken.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "KillerBee.def",
+      "sprites": [
+        "stages/KillerBee.sff"
+      ],
+      "music": [
+        "Sound/Cammy.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "KillerBee2.def",
+      "sprites": [
+        "stages/KillerBee.sff"
+      ],
+      "music": [
+        "Sound/Cammy3.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "London.def",
+      "sprites": [
+        "stages/London.sff"
+      ],
+      "music": [
+        "Sound/Cammy2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Mexico.def",
+      "sprites": [
+        "stages/Mexico.sff"
+      ],
+      "music": [
+        "sound/T-Hawk.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Mika.def",
+      "sprites": [
+        "stages/Mika.sff"
+      ],
+      "music": [
+        "sound/RMika.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Mike.def",
+      "sprites": [
+        "Mike.sff"
+      ],
+      "music": [
+        "sound/Mike.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "OniFangYellow.def",
+      "sprites": [
+        "stages/OniFangYellow.sff"
+      ],
+      "music": [
+        "sound/Shin Akuma.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Outbacks.def",
+      "sprites": [
+        "stages/Outbacks.sff"
+      ],
+      "music": [
+        "sound/Sagat2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Rolento.def",
+      "sprites": [
+        "stages/Rolento.sff"
+      ],
+      "music": [
+        "Sound/Rolento.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Rolento2.def",
+      "sprites": [
+        "stages/Rolento2.sff"
+      ],
+      "music": [
+        "sound/Rolento2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Rose.def",
+      "sprites": [
+        "stages/Rose.sff"
+      ],
+      "music": [
+        "sound/Rose.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Rose2.def",
+      "sprites": [
+        "stages/Rose2.sff"
+      ],
+      "music": [
+        "sound/Rose2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Rose3.def",
+      "sprites": [
+        "Rose3.sff"
+      ],
+      "music": [
+        "sound/Rose.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Ryu.def",
+      "sprites": [
+        "stages/Ryu.sff"
+      ],
+      "music": [
+        "sound/Ryu.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Ryu2.def",
+      "sprites": [
+        "stages/Ryu2.sff"
+      ],
+      "music": [
+        "sound/Ryu3.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Ryu3.def",
+      "sprites": [
+        "stages/Ryu3.sff"
+      ],
+      "music": [
+        "sound/Ryu2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Sagat.def",
+      "sprites": [
+        "stages/Sagat.sff"
+      ],
+      "music": [
+        "Sound/Sagat.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Sagat2.def",
+      "sprites": [
+        "stages/Sagat2.sff"
+      ],
+      "music": [
+        "sound/Sagat3.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Sakura.def",
+      "sprites": [
+        "stages/Sakura.sff"
+      ],
+      "music": [
+        "Sound/Sakura.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Sakura2.def",
+      "sprites": [
+        "stages/Sakura2.sff"
+      ],
+      "music": [
+        "Sound/D-Sakura.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Secret-Blue.def",
+      "sprites": [
+        "stages/Secret-Blue.sff"
+      ],
+      "music": [
+        "sound/Secret.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Secret-Green.def",
+      "sprites": [
+        "stages/Secret-Green.sff"
+      ],
+      "music": [
+        "sound/Secret.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Secret-Red.def",
+      "sprites": [
+        "stages/Secret-Red.sff"
+      ],
+      "music": [
+        "sound/Secret.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Shadaloo.def",
+      "sprites": [
+        "stages/Shadaloo.sff"
+      ],
+      "music": [
+        "sound/ViolentEvil.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Sodom-X.def",
+      "sprites": [
+        "stages/Sodom-X.sff"
+      ],
+      "music": [
+        "sound/Sodom2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Sodom-Z.def",
+      "sprites": [
+        "stages/Sodom-Z.sff"
+      ],
+      "music": [
+        "sound/Sodom.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Vega.def",
+      "sprites": [
+        "stages/Vega.sff"
+      ],
+      "music": [
+        "Sound/Vega2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Venezuela.def",
+      "sprites": [
+        "stages/Venezuela.sff"
+      ],
+      "music": [
+        "sound/Secret.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Vtol.def",
+      "sprites": [
+        "stages/Vtol.sff"
+      ],
+      "music": [
+        "Sound/Bison.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Zangief.def",
+      "sprites": [
+        "stages/Zangief.sff"
+      ],
+      "music": [
+        "Sound/Zangief.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    },
+    {
+      "def": "Zangief2.def",
+      "sprites": [
+        "stages/Zangief2.sff"
+      ],
+      "music": [
+        "sound/Zangief2.mp3",
+        "Sound/Screenpack/Stage End.wav"
+      ]
+    }
+  ],
+  "validation_missing_references": []
+}
