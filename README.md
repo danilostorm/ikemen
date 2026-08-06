@@ -15,7 +15,7 @@ Projeto baseado no **Ikemen GO v1.0.0-rc.2 para Windows**, preparado para recebe
 ## Arquivos versionados
 
 - `data/select.def`: seleção completa de personagens e fases
-- `integration_manifest.json`: relatório da integração e validação
+- `integration_summary.json`: resumo da integração e validação
 
 A montagem completa para Windows contém cerca de 528 MB. Os executáveis, sprites, músicas e demais assets binários não estão armazenados neste repositório público nesta primeira etapa; o repositório começa com as configurações para continuarmos o desenvolvimento de forma organizada.
 
