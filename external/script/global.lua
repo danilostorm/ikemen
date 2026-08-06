@@ -234,6 +234,13 @@ function loop()
 			resetMatchData(false)
 			endFlag = true
 		end
+		--watch infinito: encerra a partida finalizada e devolve o controle ao loop
+		if gamemode('watch') then
+			clearColor(motif.selectbgdef.bgclearcolor[1], motif.selectbgdef.bgclearcolor[2], motif.selectbgdef.bgclearcolor[3])
+			togglePostMatch(false)
+			endMatch()
+			return
+		end
 		--victory screen
 		if start.f_victory() then
 			return
