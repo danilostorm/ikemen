@@ -1,0 +1,230 @@
+diff --git a/LEIA-ME-PT-BR.txt b/LEIA-ME-PT-BR.txt
+index 21f9f4b..f3baec7 100644
+--- a/LEIA-ME-PT-BR.txt
++++ b/LEIA-ME-PT-BR.txt
+@@ -19,3 +19,20 @@ Correcao adicional:
+ A fase stages/_Boss-Mike.def apontava para uma musica ausente.
+ A referencia foi alterada para sound/Mike.mp3. A versao original da fase
+ foi preservada como stages/_Boss-Mike.original.def.
++
++WATCH INFINITO AUTOMATICO
++-------------------------
++No menu principal, escolha WATCH INFINITO.
++
++O modo funciona automaticamente:
++- CPU contra CPU em lutas completas;
++- personagens aleatorios;
++- fase aleatoria;
++- troca de personagens e fase ao terminar cada luta;
++- continua sem limite de partidas;
++- evita repetir imediatamente os mesmos personagens e a mesma fase quando
++  existem outras opcoes;
++- pressione ESC durante uma luta para voltar ao menu principal.
++
++A dificuldade da CPU usa o nivel configurado nas opcoes do jogo.
++
++diff --git a/data/system.def b/data/system.def
++index 01b9eeb..b1cc8af 100644
++--- a/data/system.def
+++++ b/data/system.def
++@@ -107,7 +107,7 @@ menu.itemname.vs100kumite = "VS100 KUMITE"
++ menu.itemname.timeattack = "TIME ATTACK"   
++ menu.itemname.worldtour = "WORLD TOUR"                      
++ menu.itemname.training = "TRAINING"    
++-menu.itemname.watch = "WATCH"
+++menu.itemname.watch = "WATCH INFINITO"
++ menu.itemname.options = "OPTIONS"
++ 
++ menu.itemname.menuexit = "EXIT GAME"
++@@ -523,7 +523,7 @@ title.scale = 1.0, 1.0
++ 	title.teamversus.text = "Versus"
++ 	title.vs100kumite.text = "VS100 Kumite"
++ 	title.freebattle.text = "Free Battle"
++-	title.watch.text = "Watch"
+++	title.watch.text = "Watch Infinito"
++ 	title.training.text = "Training"
++ 	title.timeattack.text = "Time Attack"
++ 	title.survival.text = "Survival"
++diff --git a/external/script/global.lua b/external/script/global.lua
++index 836d118..a683dd8 100644
++--- a/external/script/global.lua
+++++ b/external/script/global.lua
++@@ -256,7 +256,7 @@ function loop()
++ 		main.f_cmdInput()
++ 		--esc / m
++ 		if (esc() or (main.f_input(main.t_players, {'m'}) and not network())) and not start.challengerInit then
++-			if network() or gamemode('demo') or gamemode('randomtest') or (not config.EscOpensMenu and esc()) then
+++			if network() or gamemode('demo') or gamemode('randomtest') or gamemode('watch') or (not config.EscOpensMenu and esc()) then
++ 				endMatch()
++ 			else
++ 				menu.f_init()
++diff --git a/external/script/infinitewatch.lua b/external/script/infinitewatch.lua
++new file mode 100644
++index 0000000..255a849
++--- /dev/null
+++++ b/external/script/infinitewatch.lua
++@@ -0,0 +1,112 @@
+++-- Continuous CPU vs CPU watch mode.
+++-- Randomizes both fighters and the stage after each completed match.
+++-- Press Esc at any time to return to the title menu.
+++local infinitewatch = {}
+++
+++local function f_aiLevel()
+++	local level = tonumber(config.Difficulty) or 8
+++	return math.max(1, math.min(8, level))
+++end
+++
+++local function f_randomChar(excluded, previous)
+++	if #main.t_randomChars == 0 then
+++		return nil
+++	end
+++	local candidate = main.t_randomChars[math.random(1, #main.t_randomChars)]
+++	if #main.t_randomChars == 1 then
+++		return candidate
+++	end
+++	for _ = 1, 32 do
+++		candidate = main.t_randomChars[math.random(1, #main.t_randomChars)]
+++		if candidate ~= excluded and candidate ~= previous then
+++			return candidate
+++		end
+++	end
+++	if candidate == excluded then
+++		for _, ref in ipairs(main.t_randomChars) do
+++			if ref ~= excluded then
+++				return ref
+++			end
+++		end
+++	end
+++	return candidate
+++end
+++
+++local function f_randomStage(previous)
+++	local stage = start.f_setStage()
+++	if previous == nil or #main.t_includeStage[1] <= 1 then
+++		return stage
+++	end
+++	for _ = 1, 16 do
+++		if stage ~= previous then
+++			break
+++		end
+++		stage = start.f_setStage()
+++	end
+++	return stage
+++end
+++
+++function infinitewatch.run()
+++	clearColor(0, 0, 0)
+++	esc(false)
+++	setGameMode('watch')
+++	setHomeTeam(1)
+++	setAutoLevel(false)
+++
+++	main.cpuSide = {true, true}
+++	main.selectMenu = {false, false}
+++	main.stageMenu = false
+++	main.versusScreen = false
+++	main.victoryScreen = false
+++	main.continueScreen = false
+++	main.exitSelect = true
+++	main.lifebar.bars = true
+++	main.lifebar.p1aiLevel = false
+++	main.lifebar.p2aiLevel = false
+++
+++	local aiLevel = f_aiLevel()
+++	local previousP1 = nil
+++	local previousP2 = nil
+++	local previousStage = nil
+++
+++	while not esc() do
+++		clearSelected()
+++		setMatchNo(1)
+++		setTeamMode(1, 0, 1)
+++		setTeamMode(2, 0, 1)
+++		setCom(1, aiLevel)
+++		setCom(2, aiLevel)
+++
+++		local p1 = f_randomChar(previousP2, previousP1)
+++		local p2 = f_randomChar(p1, previousP2)
+++		if p1 == nil or p2 == nil then
+++			break
+++		end
+++
+++		selectChar(1, p1, getCharRandomPalette(p1))
+++		selectChar(2, p2, getCharRandomPalette(p2))
+++
+++		local stage = f_randomStage(previousStage)
+++		start.f_setMusic(stage)
+++		loadStart()
+++		local winner = game()
+++		clearColor(0, 0, 0)
+++
+++		if winner < 0 or esc() then
+++			break
+++		end
+++
+++		previousP1 = p1
+++		previousP2 = p2
+++		previousStage = stage
+++		refresh()
+++	end
+++
+++	clearSelected()
+++	esc(false)
+++	main.f_bgReset(motif[main.background].bg)
+++	main.f_fadeReset('fadein', motif[main.group])
+++	main.f_playBGM(true, motif.music.title_bgm, motif.music.title_bgm_loop, motif.music.title_bgm_volume, motif.music.title_bgm_loopstart, motif.music.title_bgm_loopend)
+++end
+++
+++return infinitewatch
++diff --git a/external/script/main.lua b/external/script/main.lua
++index 785adc2..3748b25 100644
++--- a/external/script/main.lua
+++++ b/external/script/main.lua
++@@ -2282,6 +2282,7 @@ end
++ --Load additional scripts
++ start = require('external.script.start')
++ randomtest = require('external.script.randomtest')
+++infinitewatch = require('external.script.infinitewatch')
++ options = require('external.script.options')
++ storyboard = require('external.script.storyboard')
++ menu = require('external.script.menu')
++@@ -2994,32 +2995,17 @@ main.t_itemname = {
++ 		hook.run("main.t_itemname")
++ 		return start.f_selectMode
++ 	end,
++-	--WATCH
+++	--WATCH INFINITO (CPU x CPU)
++ 	['watch'] = function()
++-		main.f_playerInput(main.playerInput, 1)
++-		main.t_pIn[2] = 1
++-		main.cpuSide[1] = true
++-		--main.lifebar.p1aiLevel = true
++-		--main.lifebar.p2aiLevel = true
++-		main.selectMenu[2] = true
++-		main.stageMenu = true
++-		main.teamMenu[1].ratio = true
++-		main.teamMenu[1].simul = true
++-		main.teamMenu[1].single = true
++-		main.teamMenu[1].tag = true
++-		main.teamMenu[1].turns = true
++-		main.teamMenu[2].ratio = true
++-		main.teamMenu[2].simul = true
++-		main.teamMenu[2].single = true
++-		main.teamMenu[2].tag = true
++-		main.teamMenu[2].turns = true
++-		main.versusScreen = true
++-		main.numSimul = {1, 2} --new line
++-		main.victoryScreen = true
+++		main.cpuSide = {true, true}
+++		main.selectMenu = {false, false}
+++		main.stageMenu = false
+++		main.versusScreen = false
+++		main.victoryScreen = false
++ 		main.txt_mainSelect:update({text = motif.select_info.title_watch_text})
++ 		setGameMode('watch')
++ 		hook.run("main.t_itemname")
++-		return start.f_selectMode
+++		return infinitewatch.run
++ 	end,
++ }
++ main.t_itemname.teamarcade = main.t_itemname.arcade
