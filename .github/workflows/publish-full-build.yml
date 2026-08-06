@@ -1,4 +1,4 @@
-name: Publicar versão completa
+name: Publicar versão completa corrigida
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 120
 
     steps:
       - name: Baixar repositório
@@ -20,30 +20,45 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Baixar partes da montagem
+      - name: Baixar partes da montagem corrigida
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p /tmp/ikemen-parts
+          mkdir -p /tmp/sfaz-parts
 
           ids=(
-            '19vCri8F_fmSXnJTkPgZrOaaJU7RsiQUl'
-            '16N33gQuFLo6G9qHbKG5pkbjzoN4OGBgW'
-            '1cPlzHMQ3RFo2ENHh38uAW0zgqVfJyJ5M'
-            '1wcP0aWdRbsF506Rwl9NYmuDJUoxfW1Fn'
-            '1KzPNrX8GcGK85_RzTnrwvn1dPpAqA17Z'
+            '1curBaZ8e7pdZxexTWsEItcsXrGPZP0Dv'
+            '1PPMWPRJ1gTdK3vDrQby1M31kq2b5sbms'
+            '17mPT1vxsIsmYMbZqTWZrYXejLEAKXTjk'
+            '1OSVR7tFimjmtzpgWsDhIM65u-PWI-X4j'
+            '1_nF-MEnATiONGRB_h1HczVklmHB3phJw'
+            '13iRGpINn8TP8CRkL6lFXqb6ySlM-akEy'
+            '1kxqWFEZnpDfU8lGY2MBQ5jfnQbXQBpAn'
+            '12MMmao_TkSP7y4xUdWusdutbHWmgHeAs'
+            '1QberBV5hwKvQF5qWOS939OuBWva6XPIm'
+            '1x8JohMYKFhigCYG4uZ3djje-QCXy8qF1'
+            '103vGfOcJHDpWn3jqjtt2OjEB0PXO7wml'
+            '11Qi8oamY8PtdlEn2uRVoo1-9V6vKv4pN'
+            '1c6FbK6UjdeOUgJx578XyH1L40q2339dK'
+          )
+
+          sizes=(
+            83886080 83886080 83886080 83886080 83886080
+            83886080 83886080 83886080 83886080 83886080
+            83886080 83886080 25458201
           )
 
           for index in "${!ids[@]}"; do
-            output=$(printf '/tmp/ikemen-parts/ikemen_release.zip.part%02d' "$index")
+            output=$(printf '/tmp/sfaz-parts/sfaz_complete.zip.part%02d' "$index")
             curl --location --fail --retry 5 --retry-all-errors \
               --user-agent 'Mozilla/5.0' \
               "https://drive.usercontent.google.com/download?id=${ids[$index]}&export=download&confirm=t" \
               --output "$output"
 
-            size=$(stat --format='%s' "$output")
-            if [ "$size" -lt 60000000 ]; then
-              echo "Parte $index está menor que o esperado: $size bytes"
+            actual=$(stat --format='%s' "$output")
+            expected=${sizes[$index]}
+            if [ "$actual" -ne "$expected" ]; then
+              echo "Tamanho incorreto na parte $index: esperado $expected, recebido $actual"
               exit 1
             fi
           done
@@ -52,26 +67,28 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          archive='/tmp/Ikemen_GO_Street_Fighter_Alpha_Zero_pronto.zip'
-          cat /tmp/ikemen-parts/ikemen_release.zip.part* > "$archive"
-          echo '46bc9c80c8dec632d90db1ede36fba1abfbb6b13231183162fa5e859f23e181d  /tmp/Ikemen_GO_Street_Fighter_Alpha_Zero_pronto.zip' | sha256sum --check
+          archive='/tmp/Street_Fighter_Alpha_Zero_COMPLETO_CORRIGIDO.zip'
+          cat /tmp/sfaz-parts/sfaz_complete.zip.part* > "$archive"
+          echo '5e6dc87587b60165e4d666700e46318fc8ce5917cf5bd1b8b8f75ad1d37f7274  /tmp/Street_Fighter_Alpha_Zero_COMPLETO_CORRIGIDO.zip' | sha256sum --check
           unzip -tq "$archive"
           printf '%s  %s\n' \
-            '46bc9c80c8dec632d90db1ede36fba1abfbb6b13231183162fa5e859f23e181d' \
-            'Ikemen_GO_Street_Fighter_Alpha_Zero_pronto.zip' \
-            > /tmp/Ikemen_GO_Street_Fighter_Alpha_Zero_pronto.zip.sha256
+            '5e6dc87587b60165e4d666700e46318fc8ce5917cf5bd1b8b8f75ad1d37f7274' \
+            'Street_Fighter_Alpha_Zero_COMPLETO_CORRIGIDO.zip' \
+            > /tmp/Street_Fighter_Alpha_Zero_COMPLETO_CORRIGIDO.zip.sha256
 
-      - name: Colocar todos os arquivos no repositório
+      - name: Colocar montagem completa no repositório
         shell: bash
         run: |
           set -euo pipefail
-          rm -rf /tmp/ikemen-unpacked
-          mkdir -p /tmp/ikemen-unpacked
-          unzip -q /tmp/Ikemen_GO_Street_Fighter_Alpha_Zero_pronto.zip -d /tmp/ikemen-unpacked
+          rm -rf /tmp/sfaz-unpacked
+          mkdir -p /tmp/sfaz-unpacked
+          unzip -q /tmp/Street_Fighter_Alpha_Zero_COMPLETO_CORRIGIDO.zip -d /tmp/sfaz-unpacked
 
-          source_dir='/tmp/ikemen-unpacked/Ikemen_GO_Street_Fighter_Alpha_Zero'
-          test -f "$source_dir/Ikemen_GO.exe"
-          cp "$source_dir/README.md" "$source_dir/README_IKEMEN.md"
+          source_dir='/tmp/sfaz-unpacked/Ikemen_SFAZ_COMPLETO'
+          test -f "$source_dir/Street Fighter AZ.exe"
+          test -f "$source_dir/data/common.snd"
+          test -f "$source_dir/external/script/main.lua"
+          test -f "$source_dir/VALIDACAO.json"
 
           rsync -a --delete \
             --exclude='.git/' \
@@ -81,38 +98,49 @@ jobs:
 
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git lfs install --local
+          git lfs track 'data/common.snd'
+          git add .gitattributes
           git add -A
 
           if git diff --cached --quiet; then
-            echo 'Arquivos completos já estão versionados.'
+            echo 'A montagem corrigida já está versionada.'
           else
-            git commit -m 'Adiciona montagem completa do Ikemen'
+            git commit -m 'Corrige montagem com executável personalizado'
             git push origin HEAD:main
           fi
 
-      - name: Criar Release pronta
+      - name: Criar Release corrigida
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          tag='v1.0.0-storm'
+          tag='v1.0.1-storm'
           target=$(git rev-parse HEAD)
 
-          cat > /tmp/release-notes.md <<'EOF'
-          # Ikemen GO – Street Fighter Alpha/Zero
+          cat > /tmp/release-notes.md <<'EOF_NOTES'
+          # Street Fighter Alpha Zero completo — correção do `inDialogue`
 
-          Versão pronta para Windows com 45 personagens do pacote Street Fighter Alpha/Zero, 131 fases e 48 personagens selecionáveis ao todo.
+          Esta versão reúne os dois pacotes originais fornecidos:
 
-          Extraia o ZIP e execute `Ikemen_GO.exe`.
+          - personagens, fases e músicas;
+          - executável personalizado, dados, scripts, fontes, rotas Arcade e configurações.
 
-          SHA-256: `46bc9c80c8dec632d90db1ede36fba1abfbb6b13231183162fa5e859f23e181d`
-          EOF
+          A versão anterior usava o `Ikemen_GO.exe` padrão, que não reconhece o gatilho `inDialogue` utilizado pelos personagens. Esta versão usa o executável correto `Street Fighter AZ.exe`.
 
+          Para jogar, extraia o ZIP e execute `INICIAR_JOGO.bat` ou `Street Fighter AZ.exe`.
+
+          Inclui 45 personagens selecionáveis, 131 fases e correção da música ausente na fase `_Boss-Mike`.
+
+          SHA-256: `5e6dc87587b60165e4d666700e46318fc8ce5917cf5bd1b8b8f75ad1d37f7274`
+          EOF_NOTES
+
+          gh release delete 'v1.0.0-storm' --cleanup-tag --yes >/dev/null 2>&1 || true
           gh release delete "$tag" --cleanup-tag --yes >/dev/null 2>&1 || true
           gh release create "$tag" \
-            /tmp/Ikemen_GO_Street_Fighter_Alpha_Zero_pronto.zip \
-            /tmp/Ikemen_GO_Street_Fighter_Alpha_Zero_pronto.zip.sha256 \
+            /tmp/Street_Fighter_Alpha_Zero_COMPLETO_CORRIGIDO.zip \
+            /tmp/Street_Fighter_Alpha_Zero_COMPLETO_CORRIGIDO.zip.sha256 \
             --target "$target" \
-            --title 'Ikemen GO Street Fighter Alpha/Zero v1.0.0-storm' \
+            --title 'Street Fighter Alpha Zero completo v1.0.1-storm' \
             --notes-file /tmp/release-notes.md
