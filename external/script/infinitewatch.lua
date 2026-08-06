@@ -3,9 +3,7 @@
 -- Press Esc at any time to return to the title menu.
 local infinitewatch = {}
 
--- Replace the temporary require sentinel immediately. This prevents the engine
--- from reporting "loop or previous error loading module" when main.lua is
--- reloaded after a completed match.
+-- Prevent the custom engine from keeping require() in a temporary loading state.
 package.loaded['external.script.infinitewatch'] = infinitewatch
 
 local function f_aiLevel()
@@ -68,6 +66,9 @@ function infinitewatch.run()
 	main.lifebar.bars = true
 	main.lifebar.p1aiLevel = false
 	main.lifebar.p2aiLevel = false
+	-- The rank mod expects selection tables created by the normal select screen.
+	-- Infinite Watch selects fighters directly, so ranking must stay disabled.
+	main.rankDisplay = false
 
 	local aiLevel = f_aiLevel()
 	local previousP1 = nil
@@ -75,6 +76,9 @@ function infinitewatch.run()
 	local previousStage = nil
 
 	while not esc() do
+		-- Some menu hooks can enable ranking for gamemode('watch'). Force it off
+		-- before every match so the rank hook cannot interrupt the rotation.
+		main.rankDisplay = false
 		clearSelected()
 		setMatchNo(1)
 		setTeamMode(1, 0, 1)
@@ -97,8 +101,8 @@ function infinitewatch.run()
 		game()
 		clearColor(0, 0, 0)
 
-		-- endMatch() is also used after a normally completed match. Only Esc
-		-- should leave the infinite loop.
+		-- endMatch() is also used after a normal completed match.
+		-- Only Esc should leave the infinite watch loop.
 		if esc() then
 			break
 		end
@@ -110,6 +114,7 @@ function infinitewatch.run()
 	end
 
 	clearSelected()
+	main.rankDisplay = false
 	esc(false)
 	main.f_bgReset(motif[main.background].bg)
 	main.f_fadeReset('fadein', motif[main.group])
