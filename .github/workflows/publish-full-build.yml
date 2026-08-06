@@ -1,0 +1,118 @@
+name: Publicar versão completa
+
+on:
+  push:
+    paths:
+      - '.github/workflows/publish-full-build.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Baixar partes da montagem
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/ikemen-parts
+
+          ids=(
+            '19vCri8F_fmSXnJTkPgZrOaaJU7RsiQUl'
+            '16N33gQuFLo6G9qHbKG5pkbjzoN4OGBgW'
+            '1cPlzHMQ3RFo2ENHh38uAW0zgqVfJyJ5M'
+            '1wcP0aWdRbsF506Rwl9NYmuDJUoxfW1Fn'
+            '1KzPNrX8GcGK85_RzTnrwvn1dPpAqA17Z'
+          )
+
+          for index in "${!ids[@]}"; do
+            output=$(printf '/tmp/ikemen-parts/ikemen_release.zip.part%02d' "$index")
+            curl --location --fail --retry 5 --retry-all-errors \
+              --user-agent 'Mozilla/5.0' \
+              "https://drive.usercontent.google.com/download?id=${ids[$index]}&export=download&confirm=t" \
+              --output "$output"
+
+            size=$(stat --format='%s' "$output")
+            if [ "$size" -lt 60000000 ]; then
+              echo "Parte $index está menor que o esperado: $size bytes"
+              exit 1
+            fi
+          done
+
+      - name: Montar e validar ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive='/tmp/Ikemen_GO_Street_Fighter_Alpha_Zero_pronto.zip'
+          cat /tmp/ikemen-parts/ikemen_release.zip.part* > "$archive"
+          echo '46bc9c80c8dec632d90db1ede36fba1abfbb6b13231183162fa5e859f23e181d  /tmp/Ikemen_GO_Street_Fighter_Alpha_Zero_pronto.zip' | sha256sum --check
+          unzip -tq "$archive"
+          printf '%s  %s\n' \
+            '46bc9c80c8dec632d90db1ede36fba1abfbb6b13231183162fa5e859f23e181d' \
+            'Ikemen_GO_Street_Fighter_Alpha_Zero_pronto.zip' \
+            > /tmp/Ikemen_GO_Street_Fighter_Alpha_Zero_pronto.zip.sha256
+
+      - name: Colocar todos os arquivos no repositório
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/ikemen-unpacked
+          mkdir -p /tmp/ikemen-unpacked
+          unzip -q /tmp/Ikemen_GO_Street_Fighter_Alpha_Zero_pronto.zip -d /tmp/ikemen-unpacked
+
+          source_dir='/tmp/ikemen-unpacked/Ikemen_GO_Street_Fighter_Alpha_Zero'
+          test -f "$source_dir/Ikemen_GO.exe"
+          cp "$source_dir/README.md" "$source_dir/README_IKEMEN.md"
+
+          rsync -a --delete \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='README.md' \
+            "$source_dir/" "$GITHUB_WORKSPACE/"
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo 'Arquivos completos já estão versionados.'
+          else
+            git commit -m 'Adiciona montagem completa do Ikemen'
+            git push origin HEAD:main
+          fi
+
+      - name: Criar Release pronta
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag='v1.0.0-storm'
+          target=$(git rev-parse HEAD)
+
+          cat > /tmp/release-notes.md <<'EOF'
+          # Ikemen GO – Street Fighter Alpha/Zero
+
+          Versão pronta para Windows com 45 personagens do pacote Street Fighter Alpha/Zero, 131 fases e 48 personagens selecionáveis ao todo.
+
+          Extraia o ZIP e execute `Ikemen_GO.exe`.
+
+          SHA-256: `46bc9c80c8dec632d90db1ede36fba1abfbb6b13231183162fa5e859f23e181d`
+          EOF
+
+          gh release delete "$tag" --cleanup-tag --yes >/dev/null 2>&1 || true
+          gh release create "$tag" \
+            /tmp/Ikemen_GO_Street_Fighter_Alpha_Zero_pronto.zip \
+            /tmp/Ikemen_GO_Street_Fighter_Alpha_Zero_pronto.zip.sha256 \
+            --target "$target" \
+            --title 'Ikemen GO Street Fighter Alpha/Zero v1.0.0-storm' \
+            --notes-file /tmp/release-notes.md
