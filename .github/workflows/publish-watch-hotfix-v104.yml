@@ -1,0 +1,141 @@
+name: Publicar Watch Infinito v1.0.4
+
+on:
+  push:
+    paths:
+      - '.github/workflows/publish-watch-hotfix-v104.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Baixar repositório sem assets LFS
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: false
+
+      - name: Proteger módulo de ranking
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p = Path('external/mods/rank/rank.lua')
+          s = p.read_text(encoding='utf-8')
+
+          old = """\trankInit = true
+          \tcounter = 0
+          \tif motif.rank_info.enabled == 0 or not main.rankDisplay then
+          \t\treturn false
+          \tend
+          \t-- Skip execution if any of the characters has select.def rankdisplay flag set to 0
+          \tfor side = 1, 2 do
+          \t\tfor _, v in ipairs(start.p[side].t_selected) do
+          \t\t\tif start.f_getCharData(v.ref).rankdisplay == 0 then
+          \t\t\t\treturn false
+          \t\t\tend
+          \t\tend
+          \tend"""
+
+          new = """\trankInit = true
+          \tcounter = 0
+          \t-- Watch/Demo may select characters directly and therefore do not always
+          \t-- populate start.p[side].t_selected. Ranking is not shown in these modes.
+          \tif gamemode('watch') or gamemode('demo') or motif.rank_info.enabled == 0 or not main.rankDisplay then
+          \t\tactive = false
+          \t\treturn false
+          \tend
+          \t-- Guard external modes that start without the normal selection screen.
+          \tfor side = 1, 2 do
+          \t\tlocal selected = start.p ~= nil and start.p[side] ~= nil and start.p[side].t_selected or nil
+          \t\tif type(selected) ~= 'table' then
+          \t\t\tactive = false
+          \t\t\treturn false
+          \t\tend
+          \t\tfor _, v in ipairs(selected) do
+          \t\t\tif start.f_getCharData(v.ref).rankdisplay == 0 then
+          \t\t\t\tactive = false
+          \t\t\t\treturn false
+          \t\t\tend
+          \t\tend
+          \tend"""
+
+          if old in s:
+              s = s.replace(old, new, 1)
+          elif "Watch/Demo may select characters directly" not in s:
+              raise SystemExit('Bloco esperado do rank.lua não encontrado')
+
+          s = s.replace(' or gamemode("versuscoop") or gamemode("watch")', ' or gamemode("versuscoop")', 1)
+          p.write_text(s, encoding='utf-8', newline='\n')
+          PY
+
+      - name: Validar Lua
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lua5.4
+          luac5.4 -p external/script/main.lua
+          luac5.4 -p external/script/global.lua
+          luac5.4 -p external/script/infinitewatch.lua
+          luac5.4 -p external/mods/rank/rank.lua
+
+      - name: Salvar proteção do ranking
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add external/mods/rank/rank.lua
+          if ! git diff --cached --quiet; then
+            git commit -m 'Impede ranking de quebrar o Watch Infinito'
+            git push origin HEAD:main
+          fi
+
+      - name: Criar hotfix pequeno
+        shell: bash
+        run: |
+          set -euo pipefail
+          root='/tmp/Watch_Infinito_Hotfix_v1.0.4'
+          mkdir -p "$root/external/script" "$root/external/mods/rank"
+          cp external/script/main.lua "$root/external/script/"
+          cp external/script/global.lua "$root/external/script/"
+          cp external/script/infinitewatch.lua "$root/external/script/"
+          cp external/mods/rank/rank.lua "$root/external/mods/rank/"
+          cat > "$root/LEIA-ME.txt" <<'EOF'
+          WATCH INFINITO HOTFIX v1.0.4
+
+          1. Feche o jogo.
+          2. Extraia o ZIP dentro da pasta do jogo.
+          3. Confirme a substituição dos arquivos.
+          4. Abra Street Fighter AZ.exe e escolha WATCH INFINITO.
+
+          Corrige o erro do mods/rank/rank.lua após o fim da luta e mantém
+          a troca automática de personagens e fase.
+          EOF
+          cd /tmp
+          zip -qr Watch_Infinito_Hotfix_v1.0.4.zip Watch_Infinito_Hotfix_v1.0.4
+          sha256sum Watch_Infinito_Hotfix_v1.0.4.zip > Watch_Infinito_Hotfix_v1.0.4.zip.sha256
+
+      - name: Publicar Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag='v1.0.4-storm'
+          target=$(git rev-parse HEAD)
+          gh release delete "$tag" --cleanup-tag --yes >/dev/null 2>&1 || true
+          gh release create "$tag" \
+            /tmp/Watch_Infinito_Hotfix_v1.0.4.zip \
+            /tmp/Watch_Infinito_Hotfix_v1.0.4.zip.sha256 \
+            --target "$target" \
+            --title 'Watch Infinito Hotfix v1.0.4' \
+            --notes 'Corrige o erro do módulo de ranking ao terminar uma luta no WATCH INFINITO. Extraia sobre a versão v1.0.3 e confirme a substituição dos arquivos.'
