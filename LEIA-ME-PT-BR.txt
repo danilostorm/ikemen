@@ -19,3 +19,20 @@ Correcao adicional:
 A fase stages/_Boss-Mike.def apontava para uma musica ausente.
 A referencia foi alterada para sound/Mike.mp3. A versao original da fase
 foi preservada como stages/_Boss-Mike.original.def.
+
+WATCH INFINITO AUTOMATICO
+-------------------------
+No menu principal, escolha WATCH INFINITO.
+
+O modo funciona automaticamente:
+- CPU contra CPU em lutas completas;
+- personagens aleatorios;
+- fase aleatoria;
+- troca de personagens e fase ao terminar cada luta;
+- continua sem limite de partidas;
+- evita repetir imediatamente os mesmos personagens e a mesma fase quando
+  existem outras opcoes;
+- pressione ESC durante uma luta para voltar ao menu principal.
+
+A dificuldade da CPU usa o nivel configurado nas opcoes do jogo.
+

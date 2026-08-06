@@ -2282,6 +2282,7 @@ end
 --Load additional scripts
 start = require('external.script.start')
 randomtest = require('external.script.randomtest')
+infinitewatch = require('external.script.infinitewatch')
 options = require('external.script.options')
 storyboard = require('external.script.storyboard')
 menu = require('external.script.menu')
@@ -2994,32 +2995,17 @@ main.t_itemname = {
 		hook.run("main.t_itemname")
 		return start.f_selectMode
 	end,
-	--WATCH
+	--WATCH INFINITO (CPU x CPU)
 	['watch'] = function()
-		main.f_playerInput(main.playerInput, 1)
-		main.t_pIn[2] = 1
-		main.cpuSide[1] = true
-		--main.lifebar.p1aiLevel = true
-		--main.lifebar.p2aiLevel = true
-		main.selectMenu[2] = true
-		main.stageMenu = true
-		main.teamMenu[1].ratio = true
-		main.teamMenu[1].simul = true
-		main.teamMenu[1].single = true
-		main.teamMenu[1].tag = true
-		main.teamMenu[1].turns = true
-		main.teamMenu[2].ratio = true
-		main.teamMenu[2].simul = true
-		main.teamMenu[2].single = true
-		main.teamMenu[2].tag = true
-		main.teamMenu[2].turns = true
-		main.versusScreen = true
-		main.numSimul = {1, 2} --new line
-		main.victoryScreen = true
+		main.cpuSide = {true, true}
+		main.selectMenu = {false, false}
+		main.stageMenu = false
+		main.versusScreen = false
+		main.victoryScreen = false
 		main.txt_mainSelect:update({text = motif.select_info.title_watch_text})
 		setGameMode('watch')
 		hook.run("main.t_itemname")
-		return start.f_selectMode
+		return infinitewatch.run
 	end,
 }
 main.t_itemname.teamarcade = main.t_itemname.arcade
