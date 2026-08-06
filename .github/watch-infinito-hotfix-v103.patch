@@ -1,0 +1,50 @@
+diff --git a/external/script/global.lua b/external/script/global.lua
+index a683dd8..7f5f72f 100644
+--- a/external/script/global.lua
++++ b/external/script/global.lua
+@@ -234,6 +234,13 @@ function loop()
+ 			resetMatchData(false)
+ 			endFlag = true
+ 		end
++		--watch infinito: encerra a partida finalizada e devolve o controle ao loop
++		if gamemode('watch') then
++			clearColor(motif.selectbgdef.bgclearcolor[1], motif.selectbgdef.bgclearcolor[2], motif.selectbgdef.bgclearcolor[3])
++			togglePostMatch(false)
++			endMatch()
++			return
++		end
+ 		--victory screen
+ 		if start.f_victory() then
+ 			return
+diff --git a/external/script/infinitewatch.lua b/external/script/infinitewatch.lua
+index 255a849..6d1014f 100644
+--- a/external/script/infinitewatch.lua
++++ b/external/script/infinitewatch.lua
+@@ -89,10 +89,12 @@ function infinitewatch.run()
+ 		local stage = f_randomStage(previousStage)
+ 		start.f_setMusic(stage)
+ 		loadStart()
+-		local winner = game()
++		game()
+ 		clearColor(0, 0, 0)
+ 
+-		if winner < 0 or esc() then
++		--endMatch() is also used after a normal completed match.
++		--Only Esc should leave the infinite watch loop.
++		if esc() then
+ 			break
+ 		end
+ 
+diff --git a/external/script/main.lua b/external/script/main.lua
+index 3748b25..c58c2d2 100644
+--- a/external/script/main.lua
++++ b/external/script/main.lua
+@@ -2282,7 +2282,7 @@ end
+ --Load additional scripts
+ start = require('external.script.start')
+ randomtest = require('external.script.randomtest')
+-infinitewatch = require('external.script.infinitewatch')
++infinitewatch = assert(loadfile('external/script/infinitewatch.lua'))()
+ options = require('external.script.options')
+ storyboard = require('external.script.storyboard')
+ menu = require('external.script.menu')
