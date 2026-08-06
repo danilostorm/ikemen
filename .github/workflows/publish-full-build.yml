@@ -27,19 +27,19 @@ jobs:
           mkdir -p /tmp/sfaz-parts
 
           ids=(
-            '1curBaZ8e7pdZxexTWsEItcsXrGPZP0Dv'
-            '1PPMWPRJ1gTdK3vDrQby1M31kq2b5sbms'
-            '17mPT1vxsIsmYMbZqTWZrYXejLEAKXTjk'
-            '1OSVR7tFimjmtzpgWsDhIM65u-PWI-X4j'
-            '1_nF-MEnATiONGRB_h1HczVklmHB3phJw'
-            '13iRGpINn8TP8CRkL6lFXqb6ySlM-akEy'
-            '1kxqWFEZnpDfU8lGY2MBQ5jfnQbXQBpAn'
-            '12MMmao_TkSP7y4xUdWusdutbHWmgHeAs'
-            '1QberBV5hwKvQF5qWOS939OuBWva6XPIm'
-            '1x8JohMYKFhigCYG4uZ3djje-QCXy8qF1'
-            '103vGfOcJHDpWn3jqjtt2OjEB0PXO7wml'
-            '11Qi8oamY8PtdlEn2uRVoo1-9V6vKv4pN'
-            '1c6FbK6UjdeOUgJx578XyH1L40q2339dK'
+            '1fT_aXd1fB1h44D-0AlIH-nFHBPSVmcp9'
+            '1DsDIYIiX64BNYRalahgonDQquuHJCf2d'
+            '1EfxO6IiD6WhcyS1Qj1rL81hi73GTx83k'
+            '1vTvbCUzVMgFwhS-9bWpRGGf_A57ZdaEo'
+            '13Bv9Kd5nnw22PM1siKe5zVrBxcbSw0YO'
+            '1OD1NQERedIBJA4ZAQDCIyrxRxmTl00Ok'
+            '1jSbrkeQBGMueeR5-Oj7hF4_QXLpZt8-2'
+            '1J3QX7LvnG7JQuR-VgZf21ZSwMfDxVfET'
+            '14I_jk6t2X1TGJ7n4C-XtHu12PFRcL02O'
+            '1tq2fgdua8SMb6qXMOKR9pQwCmP6MWWLy'
+            '1O0OfPgXiQKnI8k-6uMLK3pflarGIQDNc'
+            '11cPK_RQBY4Q8V5pD0lEiyRjn_on1wDSC'
+            '1jo7hMhNR_KuxI2qJBL15tFkBeEcXB_hL'
           )
 
           sizes=(
