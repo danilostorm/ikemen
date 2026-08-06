@@ -1,0 +1,44 @@
+name: Verificar Release Watch Infinito
+
+on:
+  push:
+    paths:
+      - '.github/workflows/verify-watch-release.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Aguardar e validar anexos
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          zip_name='Street_Fighter_Alpha_Zero_Watch_Infinito_v1.0.2.zip'
+          sha_name='Street_Fighter_Alpha_Zero_Watch_Infinito_v1.0.2.zip.sha256'
+
+          for attempt in $(seq 1 40); do
+            assets=$(gh release view v1.0.2-storm --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' 2>/dev/null || true)
+            if grep -Fxq "$zip_name" <<< "$assets" && grep -Fxq "$sha_name" <<< "$assets"; then
+              body=$(printf 'Release v1.0.2-storm validada.\nZIP: %s\nSHA256: %s\n' "$zip_name" "$sha_name")
+              encoded=$(printf '%s' "$body" | base64 -w0)
+              existing=$(gh api "repos/$GITHUB_REPOSITORY/contents/RELEASE_v1.0.2_OK.txt" --jq '.sha' 2>/dev/null || true)
+              args=(--method PUT "repos/$GITHUB_REPOSITORY/contents/RELEASE_v1.0.2_OK.txt" -f message='Confirma anexos da Release v1.0.2' -f content="$encoded")
+              if [ -n "$existing" ]; then
+                args+=(-f sha="$existing")
+              fi
+              gh api "${args[@]}" >/dev/null
+              exit 0
+            fi
+            echo "Tentativa $attempt: anexos ainda não estão completos."
+            sleep 20
+          done
+
+          echo 'A Release não apresentou os dois anexos no tempo esperado.'
+          exit 1
