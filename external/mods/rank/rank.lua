@@ -150,13 +150,22 @@ local function f_rankInit()
 	end
 	rankInit = true
 	counter = 0
-	if motif.rank_info.enabled == 0 or not main.rankDisplay then
+	-- Watch/Demo may select characters directly and therefore do not always
+	-- populate start.p[side].t_selected. Ranking is not shown in these modes.
+	if gamemode('watch') or gamemode('demo') or motif.rank_info.enabled == 0 or not main.rankDisplay then
+		active = false
 		return false
 	end
-	-- Skip execution if any of the characters has select.def rankdisplay flag set to 0
+	-- Guard external modes that start without the normal selection screen.
 	for side = 1, 2 do
-		for _, v in ipairs(start.p[side].t_selected) do
+		local selected = start.p ~= nil and start.p[side] ~= nil and start.p[side].t_selected or nil
+		if type(selected) ~= 'table' then
+			active = false
+			return false
+		end
+		for _, v in ipairs(selected) do
 			if start.f_getCharData(v.ref).rankdisplay == 0 then
+				active = false
 				return false
 			end
 		end
@@ -324,7 +333,7 @@ local function f_rankDisplay()
 	-- in order to make some external module cross compatible with rank module).
 	-- Here we're adding flag assignment into existing main.t_itemname entries
 	-- via hooking feature (flag is set to true)
-	main.rankDisplay = main.rankDisplay or gamemode("arcade") or gamemode("worldtour") or gamemode("bossrush") or gamemode("freebattle") or gamemode("netplaysurvivalcoop") or gamemode("netplayteamcoop") or gamemode("netplayversus") or gamemode("survival") or gamemode("survivalcoop") or gamemode("teamcoop") or gamemode("timeattack") or gamemode("versus") or gamemode("versuscoop") or gamemode("watch")
+	main.rankDisplay = main.rankDisplay or gamemode("arcade") or gamemode("worldtour") or gamemode("bossrush") or gamemode("freebattle") or gamemode("netplaysurvivalcoop") or gamemode("netplayteamcoop") or gamemode("netplayversus") or gamemode("survival") or gamemode("survivalcoop") or gamemode("teamcoop") or gamemode("timeattack") or gamemode("versus") or gamemode("versuscoop")
 end
 hook.add("main.t_itemname", "rankHook2", f_rankDisplay)
 
