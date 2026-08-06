@@ -1,0 +1,112 @@
+name: Publicar Watch Infinito
+
+on:
+  push:
+    paths:
+      - '.github/workflows/publish-watch-infinito.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+
+    steps:
+      - name: Baixar repositório completo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Aplicar Watch Infinito
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -q 'return infinitewatch.run' external/script/main.lua; then
+            echo 'Watch Infinito já aplicado.'
+          else
+            git apply --check --ignore-space-change --ignore-whitespace .github/watch-infinito.patch
+            git apply --ignore-space-change --ignore-whitespace .github/watch-infinito.patch
+          fi
+
+      - name: Validar scripts
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lua5.4
+          luac -p external/script/infinitewatch.lua
+          luac -p external/script/main.lua
+          luac -p external/script/global.lua
+          grep -q 'menu.itemname.watch = "WATCH INFINITO"' data/system.def
+          grep -q 'while not esc() do' external/script/infinitewatch.lua
+          grep -q 'local winner = game()' external/script/infinitewatch.lua
+          test -f 'Street Fighter AZ.exe'
+
+      - name: Salvar alterações no repositório
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add LEIA-ME-PT-BR.txt data/system.def external/script/global.lua external/script/infinitewatch.lua external/script/main.lua
+          if git diff --cached --quiet; then
+            echo 'Nenhuma alteração nova para publicar.'
+          else
+            git commit -m 'Adiciona Watch Infinito automático'
+            git push origin HEAD:main
+          fi
+
+      - name: Montar ZIP completo
+        shell: bash
+        run: |
+          set -euo pipefail
+          package='/tmp/Street_Fighter_Alpha_Zero_Watch_Infinito_v1.0.2'
+          archive='/tmp/Street_Fighter_Alpha_Zero_Watch_Infinito_v1.0.2.zip'
+          rm -rf "$package" "$archive" "$archive.sha256"
+          mkdir -p "$package"
+          rsync -a --exclude='.git/' --exclude='.github/' ./ "$package/"
+          cd /tmp
+          zip -q -0 -r "$archive" "$(basename "$package")"
+          unzip -tq "$archive"
+          sha256sum "$(basename "$archive")" > "$(basename "$archive").sha256"
+
+      - name: Criar Release v1.0.2-storm
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag='v1.0.2-storm'
+          archive='/tmp/Street_Fighter_Alpha_Zero_Watch_Infinito_v1.0.2.zip'
+          target=$(git rev-parse HEAD)
+          hash=$(sha256sum "$archive" | awk '{print $1}')
+
+          cat > /tmp/release-notes.md <<EOF
+          # Street Fighter Alpha Zero – Watch Infinito
+
+          A opção **WATCH INFINITO** agora inicia lutas CPU contra CPU continuamente.
+
+          - personagens e fases aleatórios;
+          - próxima luta automática ao terminar;
+          - sem limite de partidas;
+          - evita repetições imediatas quando possível;
+          - **Esc** retorna ao menu principal;
+          - a IA usa a dificuldade definida nas opções.
+
+          Execute \`INICIAR_JOGO.bat\` ou \`Street Fighter AZ.exe\`.
+          Não use o \`Ikemen_GO.exe\` padrão.
+
+          SHA-256: \`$hash\`
+          EOF
+
+          gh release delete "$tag" --cleanup-tag --yes >/dev/null 2>&1 || true
+          gh release create "$tag" \
+            "$archive" \
+            "$archive.sha256" \
+            --target "$target" \
+            --title 'Street Fighter Alpha Zero – Watch Infinito v1.0.2-storm' \
+            --notes-file /tmp/release-notes.md
