@@ -1,0 +1,95 @@
+name: Limpar armazenamento antigo
+
+on:
+  push:
+    paths:
+      - '.github/workflows/cleanup-storage.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  cleanup:
+    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'chore: cleanup old releases and actions storage'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Limpar artifacts do GitHub Actions
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo 'Artifacts encontrados:'
+          gh api --paginate "/repos/$REPO/actions/artifacts?per_page=100" --jq '.artifacts[] | "\(.id) \(.name) \(.size_in_bytes)"' || true
+          ids=$(gh api --paginate "/repos/$REPO/actions/artifacts?per_page=100" --jq '.artifacts[].id' || true)
+          for id in $ids; do
+            echo "Apagando artifact $id"
+            gh api -X DELETE "/repos/$REPO/actions/artifacts/$id" || true
+          done
+
+      - name: Limpar caches do GitHub Actions
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          ids=$(gh api --paginate "/repos/$REPO/actions/caches?per_page=100" --jq '.actions_caches[].id' || true)
+          for id in $ids; do
+            echo "Apagando cache $id"
+            gh api -X DELETE "/repos/$REPO/actions/caches/$id" || true
+          done
+
+      - name: Manter apenas a Release mais recente
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          releases=$(mktemp)
+          gh api --paginate "/repos/$REPO/releases?per_page=100" > "$releases"
+          keep_id=$(jq -r '[.[] | select(.draft == false)] | sort_by(.created_at) | reverse | .[0].id // empty' "$releases")
+          keep_tag=$(jq -r --argjson keep "${keep_id:-0}" '.[] | select(.id == $keep) | .tag_name' "$releases" 2>/dev/null || true)
+          if [ -n "${keep_id:-}" ]; then
+            echo "Mantendo Release mais recente: $keep_tag (id $keep_id)"
+          else
+            echo 'Nenhuma Release encontrada.'
+          fi
+          jq -r --argjson keep "${keep_id:-0}" '.[] | select(.id != $keep) | "\(.id)\t\(.tag_name)"' "$releases" | while IFS=$'\t' read -r id tag; do
+            [ -z "$id" ] && continue
+            echo "Apagando Release antiga: $tag (id $id)"
+            gh api -X DELETE "/repos/$REPO/releases/$id" || true
+          done
+
+      - name: Remover execuções antigas do Actions
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          CURRENT_RUN: ${{ github.run_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          ids=$(gh api --paginate "/repos/$REPO/actions/runs?per_page=100" --jq '.workflow_runs[].id' || true)
+          for id in $ids; do
+            if [ "$id" != "$CURRENT_RUN" ]; then
+              echo "Apagando workflow run antigo $id"
+              gh api -X DELETE "/repos/$REPO/actions/runs/$id" || true
+            fi
+          done
+
+      - name: Resumo
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          echo 'Artifacts restantes:'
+          gh api "/repos/$REPO/actions/artifacts?per_page=100" --jq '.total_count'
+          echo 'Caches restantes:'
+          gh api "/repos/$REPO/actions/caches?per_page=100" --jq '.total_count // 0'
+          echo 'Releases restantes:'
+          gh api "/repos/$REPO/releases?per_page=100" --jq 'length'
