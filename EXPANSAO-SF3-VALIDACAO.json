@@ -1,0 +1,107 @@
+{
+  "characters": {
+    "Alex": {
+      "files": 12,
+      "references": [
+        "Command.cmd",
+        "Constants.cns",
+        "States/System.st",
+        "Sprite.sff",
+        "Anim.air",
+        "Sound.snd",
+        "Palettes/SF3.act",
+        "States/Normal.st",
+        "States/Special.st",
+        "States/Super.st",
+        "States/Helpers.st"
+      ],
+      "missing": []
+    },
+    "Dudley": {
+      "files": 14,
+      "references": [
+        "Command.cmd",
+        "Constants.cns",
+        "States\\System.st",
+        "States\\Normal.st",
+        "States\\Specials.st",
+        "States\\Supers.st",
+        "States\\Helpers.st",
+        "States\\EX-Specials.st",
+        "Config.txt",
+        "Sprite.sff",
+        "Anim.air",
+        "Sound.snd",
+        "Palettes\\1.act"
+      ],
+      "missing": []
+    },
+    "Urien": {
+      "files": 13,
+      "references": [
+        "Command.cmd",
+        "Constants.cns",
+        "States/System.st",
+        "States/Normal.st",
+        "States/Special.st",
+        "States/Super.st",
+        "States/Helpers.st",
+        "Config.txt",
+        "Sprite.sff",
+        "Anim.air",
+        "Sound.snd",
+        "Palettes/SFIII.act"
+      ],
+      "missing": []
+    },
+    "Gill": {
+      "files": 12,
+      "references": [
+        "Command.cmd",
+        "Constants.cns",
+        "States/System.st",
+        "States/Normal.st",
+        "States/Special.st",
+        "States/Super.st",
+        "States/Helpers.st",
+        "Config.txt",
+        "Sprite.sff",
+        "Animation.air",
+        "Sound.snd"
+      ],
+      "missing": []
+    },
+    "Ibuki": {
+      "files": 13,
+      "references": [
+        "Ibuki.sff",
+        "Ibuki.air",
+        "Ibuki.snd",
+        "Ibuki.cmd",
+        "Constants.cns",
+        "States/System.cns",
+        "States/Normal.cns",
+        "States/Specials.cns",
+        "States/Supers.cns",
+        "States/Helpers.cns",
+        "States/Customs.cns",
+        "config.txt"
+      ],
+      "missing": []
+    }
+  },
+  "stages": {
+    "FallsNightTX": {
+      "sff": "FallsNightTX.sff",
+      "bgmusic": "sound/THEME.mp3",
+      "missing": []
+    },
+    "TrainStation2022": {
+      "sff": "TrainStation2022.sff",
+      "bgmusic": "sound/J.mp3",
+      "missing": []
+    }
+  },
+  "notes": [],
+  "valid": true
+}

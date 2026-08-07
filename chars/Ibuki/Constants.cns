@@ -1,0 +1,219 @@
+
+;---------------------- Integer variable list ----------------------
+;var(0):= Hyper Finish Text Selector
+;var(3):= Jump
+;var(4):= Normal Cancel
+;var(5):= Special Cancel
+;var(6):= Super Cancel
+;var(7):= Max Cancel
+;var(8):= Helper Contact Target
+;var(9):= Counter Flag
+;var(10):= Move Var
+;var(11):= Helper Var
+;var(12):= Enemy Hit Var
+;var(13):= Hit count
+;var(15):= Juggle Points
+;var(16):= Juggle Flag
+;var(17):= Unguardable
+;var(18):= Helper Projcontact
+;var(19):= Throw Escape
+;var(20):= Custom Combo Time
+;var(21):= Super Cancel Flag
+;var(22):= Hyper Cancel Flag
+;var(23):= Super Finish Type
+;var(25):= Ticks to Apply EX FX
+;var(26):= Palette Select
+;var(27):= Palette Selector (on/off)
+;var(29):= Palette Selector Timer
+;var(30):= Hit Detection
+;var(33):= Hit SparkNo
+;var(34):= Guard SparkNo
+;var(35):= Spark X Axis
+;var(36):= Spark Y Axis
+;var(38):= Throws (0 = Allowed/1 = Not Allowed)
+;var(43):= Hit Sparks Selector
+;var(44):= Hit Sounds Selector
+;var(55):= Combo Style Selector
+
+;---------------------- Float variable list ----------------------
+;fvar(5):= Corner Push
+;fvar(8):= Down Juggle Points
+;fvar(9):= Ctrl Flag
+;fvar(10):= Damage Scale (Dampener)
+;fvar(11):= Damage Scale Backup
+;fvar(12):= Enemy In Hit State
+;fvar(13):= Attack Level
+;fvar(17):= Hitspark Helper Var
+;fvar(18):= Hitspark Helper Var
+;---------------------- Sound Channel list ----------------------
+;Channel=0 := Voice
+;Channel=1 := Dust Sound FX's
+;Channel=5 := Movement Sound FX's
+;Channel=22 := Wall Hit Sound FX
+
+;======================================================================================
+;Constants
+;======================================================================================
+[Data]
+life = 1100
+power = 3000			
+attack = 100		
+defence = 110		
+fall.defence_up = 50	
+liedown.time = 50		
+airjuggle = 0		
+sparkno = s8010			
+guard.sparkno = s8000	
+KO.echo = 0			
+volumescale = 100			
+IntPersistIndex = 0	
+FloatPersistIndex = 0 
+
+[Size]
+xscale = .95;.77777
+yscale = 1
+ground.back = 18
+ground.front = 20
+air.back = 16
+air.front = 16
+height = 60
+attack.dist = 160
+proj.attack.dist = 90
+proj.doscale = 0
+head.pos = 5, -85
+mid.pos = 0, -60
+shadowoffset = 0
+draw.offset = 0, 0
+
+[Velocity]
+walk.fwd  = 3.5575
+walk.back = -2.795
+run.fwd  = 5.8125, 0   
+run.back = -5.9125,-4 
+jump.neu = 0,-10.125 
+jump.back = -2.35925   
+jump.fwd = 3.85925       
+runjump.back = -5.0390625,-10.5275
+runjump.fwd = 5.0390625,-10.5275
+
+[Movement]
+airJump.num = 0
+airJump.height = 0
+yaccel = 0.5325
+stand.friction = 0.85
+crouch.friction = 0.82
+stand.friction.threshold = 1.0
+crouch.friction.threshold = 1.0
+air.gethit.groundLevel = 25
+air.gethit.groundRecover.ground.threshold = -20
+air.gethit.groundRecover.groundLevel = 10
+air.gethit.airRecover.threshold = -1
+air.gethit.airRecover.yAccel = 0.35
+air.gethit.trip.groundLevel = 15
+down.bounce.offset = 0, 20
+down.bounce.yAccel = 0.4
+down.bounce.groundLevel = 12
+down.friction.threshold = 0.5
+
+[Quotes]
+victory0 = "I have clothes that are much more fashionable than this! Believe me!"
+victory1 = "I can't let anyone know that I wasted my time on a loser like you!"
+victory2 = "There's no second chance in the real fight!"
+victory3 = "Remember! This is Ibuki!!! Please don't forget me!"
+victory4 = "Devote yourself to your training!"
+victory5 = "I am just an ordinary girl, you know!"
+victory6 = "I'm sorry it went so quickly! A girl's gotta have fun, you know!!"
+victory7 = "Hey, I'll tell everyone you put up a good fight, okay?"
+victory8 = "I don't think you'd last long at all if you were in my village..."
+victory9 = "What a crazy graduation exam! Being a Shinobi isn't easy!"
+victory10 = "Please don't look, I have to change outfits and I'm out of bombs..."
+victory11 = "That wasn't the most efficient way to knock you out, but it worked!"
+victory12 = "You can't hope that kind of technique to work against ninjas!"
+;Vs Akuma
+victory13 = "There's a creepy statue in my hometown with this freaky face... Looks just like you, actually!"
+;Vs Alex
+victory14 = "Have none of your friends told you not to go out dressed like that?"
+;Vs Balrog
+victory15 = "All you talk about is money and killing. Don't you do anything fun?"
+;Vs Birdie
+victory16 = "Your hair looks a mess...I'm talking about before I even beat you up..."
+;Vs Bison
+victory17 =  "Give up on this world domination nonsense already! If you don't, these weird jobs will never end!"
+;Vs Blanka
+victory18 =  "You really gross me out, but there's something kinda cute about you too..."
+;Vs Cammy
+victory19 =  "You like cats? What about raccoons? Wanna cuddle my Don-Chan?"
+;Vs Chun-Li
+victory20 =  "Why did you join the police? Haven't you ever wanted to do something else?"
+;Vs Cody
+victory21 =  "I'm loving the whole edgy, bad boy heartthrob mayor thing you got going on! It's kinda hot!"
+;Vs Dhalsim
+victory22 =  "That fire came from your mouth, right? Do you ever burn your lips?"
+;Vs Dhalsim
+victory23 =  "Nah, I'm good for being a sumo. I like being able to see my feet."
+;Vs Gill
+victory24 =  "What text? Like a secret scroll or something? Hmm..."
+;Vs Guile
+victory25 =  "Argh! I went too far this time! I'm really sorry! He looks angry..."
+;Vs Ibuki
+victory26 =  "Since you can change into me, how about you go to school in my place?"
+;Vs Juri
+victory27 =  "Why do you try to hurt people? Find a cute boy and treat him nice!"
+;Vs Kage
+victory28 =  "A ninja's taught to walk hand in hand with death ...I want to choose a different way."
+;Vs Karin
+victory29 =  "You're friends with Miss Kasugano? Are all her friends like you!?"
+;Vs Ken
+victory30 =  "It must be tough to be a CEO and a martial artist, but I've got it worse! I'm a ninja and a student!"
+;Vs Nash
+victory31 =  "You're handsome, and your voice is pretty cool, but you scare me."
+;Vs Poison
+victory32 =  "That whip suits you. Not my scene though..."
+;Vs R.Mika
+victory33 =  "Don't act all high and mighty just 'cuz you're older than me! I'm a full-fledged ninja!"
+;Vs Ryu
+victory34 =  "Your sleeves are frayed. Don't they get snagged on stuff?"
+;Vs Sagat
+victory35 =  "Y'know, it's no wonder a ninja took you down. Your "King Style" is all standing, trying to look cool."
+;Vs Sakura
+victory36 =  "Winning, losing...eh, whatever. Hey, wanna go get some dessert!"
+;Vs Seth
+victory37 =  "Lemme guess. You tried changing your look to seem cuter?!"
+;Vs Urien
+victory38 =  "If you just bark orders like that, no one's gonna listen to you."
+;Vs Vega
+victory39 =  "My curiosity's killing me! Could you show me the face behind that mask?"
+;Vs Zangief
+victory40 =  "You're pretty slow, but it's still scary when you come at me like that!"
+;Vs Adon
+victory41 =  "He finally shut up... Geez, I thought he'd never stop!"
+;Vs Cody
+victory42 =  "I do like bad boys. Those handcuffs are overkill, though. Wait - Are they real!?"
+;Vs C.Viper
+victory43 =  "We ninjas are good at keeping our weapons concealed, too! See?"
+;Vs Dan
+victory44 =  "Um, are you OK? Hello? Can you hear me? Oh, geez. He's out cold..."
+;Vs Dee Jay
+victory45 =  "That was fun! Felt more like a dance than a real fight, but whatever..."
+;Vs Dudley
+victory46 =  "Sorry, but ninjas make their own rules!"
+;Vs Evil Ryu
+victory47 =  "Maybe you've been studying too hard. Don't overdo it next time!"
+;Vs Fei Long
+victory48 =  "I guess you're kinda cute, but you're just not what I'm looking for."
+;Vs Gen
+victory49 =  "What a creepy old man! I'll steer clear of him from now on!"
+;Vs Gouken
+victory50 =  "Old dudes are all the same. They're nice and all, but they drone on and on and..."
+;Vs Guy
+victory51 =  "Quite a hunk, but the outfit needs to go. You don't look like a ninja at all!"
+;Vs Makoto
+victory52 =  "Training is fun, but dontcha have any other hobbies?"
+;Vs Rose
+victory53 =  "A fortune teller? Awesome! Do you see a cute boy in my future!?"
+;Vs T.Hawk
+victory54 =  "You're looking for your girlfriend? Is she cute? Have you been together long?"
+;Vs Yang
+victory55 =  "Ah ha ha! Those bangs of yours reminds me of Don-chan!"
+;Vs Yun
+victory56 =  "Nothing personal. I'm just faster than you."

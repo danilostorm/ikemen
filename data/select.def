@@ -23,11 +23,11 @@ EMPTY
 	SFZ_Ken,		stages/Ken.def, 	includestage =0,	order = 2, ordersurvival= 2, previous=d, next=w 
 	SFZ_V-Ken,		stages/Ken3.def, 	includestage =0,	order = 0, ordersurvival= 0, previous=d, next=w
   }
-EMPTY
-EMPTY
-EMPTY
-EMPTY
-EMPTY
+Alex, stages/FallsNightTX.def, includestage = 0, order = 2, ordersurvival = 2
+Dudley, stages/TrainStation2022.def, includestage = 0, order = 2, ordersurvival = 2
+Urien, stages/TrainStation2022.def, includestage = 0, order = 3, ordersurvival = 2
+Gill, stages/TrainStation2022.def, includestage = 0, order = 4, ordersurvival = 0
+Ibuki, stages/FallsNightTX.def, includestage = 0, order = 2, ordersurvival = 2
 ;--------------------
 ; Row 2
 EMPTY
@@ -137,6 +137,8 @@ EMPTY
 [Stages]
 
 [ExtraStages]
+stages/FallsNightTX.def
+stages/TrainStation2022.def
 Stages/Ryu.def ;ryu sfa2
 Stages/Ryu2.def ;ryu sfa3
 Stages/Ryu3.def ;ryu sfa1

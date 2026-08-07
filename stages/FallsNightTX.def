@@ -1,0 +1,121 @@
+;==============================
+;	MUGEN OMEGA STAGE
+;==============================
+
+;--------------------------------------------------------
+[Info]
+name = "water"
+displayname = "BARBAROI FALLS -NIGHT-"
+versiondate = 10,08,2010
+mugenversion = 1.0
+author = "Claudio Toxi"
+
+;--------------------------------------------------------
+
+[Camera]
+startx = 0
+starty = 0
+boundleft = -90
+boundright = 90
+boundhigh = -140
+boundlow = -15
+verticalfollow = 1
+floortension = 100
+tension = 50
+zoomout = 0.76
+;--------------------------------------------------------
+[PlayerInfo]
+p1startx = -70
+p1starty = 0
+p1startz = 0
+p1facing = 1
+
+p2startx = 70
+p2starty = 0
+p2startz = 0
+p2facing = -1
+
+leftbound = -1000
+rightbound = 1000
+topbound = 0
+botbound = 0
+
+;--------------------------------------------------------
+[Scaling]
+topz = 0
+botz = 50
+topscale = 1
+botscale = 1.2
+
+;--------------------------------------------------------
+[Bound]
+screenleft = 25
+screenright = 25
+
+;--------------------------------------------------------
+[StageInfo]
+zoffset = 205
+autoturn = 1
+resetBG = 1
+
+;--------------------------------------------------------
+[Shadow]
+intensity = 96
+color = 0,0,0
+yscale = .3
+fade.range = 0,0
+reflect = 1
+
+;--------------------------------------------------------
+[Reflection]
+intensity = 128
+
+;--------------------------------------------------------
+[Music]
+bgmusic = sound/THEME.mp3
+bgvolume = 355
+
+;--------------------------------------------------------
+[BGdef]
+spr = FallsNightTX.sff
+debugbg = 0
+
+[BG Falls Back]
+type = anim
+actionno = 0
+layerno = 0
+start = 0,0
+delta = 0.8,1
+trans = none
+mask = 0
+tilespacing = 0,0
+[Begin action 0]
+0,0,0,0,6
+0,1,0,0,6
+0,2,0,0,6
+0,3,0,0,6
+
+[BG Moon]
+type = normal
+spriteno = 1,0
+layerno = 0
+start = 0,0
+delta = 0.9,1
+trans = none
+mask = 1
+tilespacing = 0,0
+
+[BG Falls Front]
+type = anim
+actionno = 10
+layerno = 0
+start = 0,0
+delta = 1,1
+mask = 1
+velocity = 0,0
+tilespacing = 0,0
+[Begin action 10]
+10,0,0,0,6
+10,1,0,0,6
+10,2,0,0,6
+10,3,0,0,6

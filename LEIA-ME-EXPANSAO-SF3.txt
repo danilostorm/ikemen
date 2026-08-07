@@ -1,0 +1,16 @@
+EXPANSAO STREET FIGHTER III - BATCH 1
+
+Conteudo importado do Mugen fornecido pelo Google Drive:
+- Alex
+- Dudley
+- Urien
+- Gill
+- Ibuki
+- FallsNightTX
+- TrainStation2022
+- musicas THEME.mp3 e J.mp3
+
+Esta expansao foi preparada para a base Street Fighter Alpha Zero / Ikemen do repositorio danilostorm/ikemen.
+O WATCH INFINITO e as correcoes de ranking da v1.0.4 devem ser preservados.
+
+Observacao: Alex, Dudley e Urien foram reduzidos a uma paleta externa funcional para diminuir arquivos redundantes.
