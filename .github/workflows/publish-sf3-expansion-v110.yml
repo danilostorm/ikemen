@@ -1,0 +1,199 @@
+name: Publicar expansao SF3 v1.1.0
+
+on:
+  push:
+    paths:
+      - '.github/workflows/publish-sf3-expansion-v110.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Baixar repositorio
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: false
+
+      - name: Baixar expansao preparada
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --location --fail --retry 5 --retry-all-errors \
+            --user-agent 'Mozilla/5.0' \
+            'https://drive.usercontent.google.com/download?id=197TYZYuKps3Hk1y2E6tPgDObdq2_9R8V&export=download&confirm=t' \
+            --output /tmp/SF3_Expansion_Batch1_v1.1.0.zip
+          echo 'ad9cfafac24f8ead8bcbb5e35cba61d3dc4e8442a58ced17f3e0a1d606383829  /tmp/SF3_Expansion_Batch1_v1.1.0.zip' | sha256sum --check
+          unzip -tq /tmp/SF3_Expansion_Batch1_v1.1.0.zip
+
+      - name: Integrar personagens fases e sons
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/sf3exp
+          mkdir -p /tmp/sf3exp
+          unzip -q /tmp/SF3_Expansion_Batch1_v1.1.0.zip -d /tmp/sf3exp
+          src='/tmp/sf3exp/sf3_expansion'
+          test -f "$src/chars/Alex/Alex.def"
+          test -f "$src/chars/Dudley/Dudley.def"
+          test -f "$src/chars/Urien/Urien.def"
+          test -f "$src/chars/Gill/Gill.def"
+          test -f "$src/chars/Ibuki/Ibuki.def"
+          rsync -a "$src/chars/" chars/
+          rsync -a "$src/stages/" stages/
+          rsync -a "$src/sound/" sound/
+          cp "$src/LEIA-ME-EXPANSAO.txt" LEIA-ME-EXPANSAO-SF3.txt
+          cp "$src/VALIDACAO_EXPANSAO.json" EXPANSAO-SF3-VALIDACAO.json
+
+      - name: Atualizar selecao sem quebrar Watch Infinito
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p = Path('data/select.def')
+          text = p.read_text(encoding='utf-8', errors='replace')
+          lines = text.splitlines()
+
+          chars = [
+              'Alex, stages/FallsNightTX.def, includestage = 0, order = 2, ordersurvival = 2',
+              'Dudley, stages/TrainStation2022.def, includestage = 0, order = 2, ordersurvival = 2',
+              'Urien, stages/TrainStation2022.def, includestage = 0, order = 3, ordersurvival = 2',
+              'Gill, stages/TrainStation2022.def, includestage = 0, order = 4, ordersurvival = 0',
+              'Ibuki, stages/FallsNightTX.def, includestage = 0, order = 2, ordersurvival = 2',
+          ]
+
+          already = {line.split(',', 1)[0].strip().lower() for line in lines if ',' in line}
+          missing_chars = [c for c in chars if c.split(',',1)[0].lower() not in already]
+          if missing_chars:
+              row1 = next(i for i, line in enumerate(lines) if line.strip().lower() == '; row 1')
+              row2 = next(i for i, line in enumerate(lines[row1 + 1:], row1 + 1) if line.strip().lower() == '; row 2')
+              empty = [i for i in range(row1 + 1, row2) if lines[i].strip().upper() == 'EMPTY']
+              if len(empty) < len(missing_chars):
+                  raise SystemExit(f'Nao ha slots EMPTY suficientes na Row 1: {len(empty)}')
+              # Preserva o primeiro EMPTY da grade e usa os cinco vazios depois do Ken.
+              targets = empty[-len(missing_chars):]
+              for idx, entry in zip(targets, missing_chars):
+                  lines[idx] = entry
+
+          extra = next(i for i, line in enumerate(lines) if line.strip().lower() == '[extrastages]')
+          new_stages = ['stages/FallsNightTX.def', 'stages/TrainStation2022.def']
+          existing_lower = {line.strip().lower() for line in lines}
+          insert_at = extra + 1
+          for stage in new_stages:
+              if stage.lower() not in existing_lower:
+                  lines.insert(insert_at, stage)
+                  insert_at += 1
+
+          p.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+
+          grep -q '^Alex,' data/select.def
+          grep -q '^Dudley,' data/select.def
+          grep -q '^Urien,' data/select.def
+          grep -q '^Gill,' data/select.def
+          grep -q '^Ibuki,' data/select.def
+          grep -q '^stages/FallsNightTX.def$' data/select.def
+          grep -q '^stages/TrainStation2022.def$' data/select.def
+          test -f external/script/infinitewatch.lua
+          grep -q "gamemode('watch')" external/mods/rank/rank.lua
+
+      - name: Salvar expansao na main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add chars/Alex chars/Dudley chars/Urien chars/Gill chars/Ibuki \
+            stages/FallsNightTX.def stages/FallsNightTX.sff \
+            stages/TrainStation2022.def stages/TrainStation2022.sff \
+            sound/THEME.mp3 sound/J.mp3 data/select.def \
+            LEIA-ME-EXPANSAO-SF3.txt EXPANSAO-SF3-VALIDACAO.json
+          if git diff --cached --quiet; then
+            echo 'Expansao ja integrada.'
+          else
+            git commit -m 'Adiciona expansao Street Fighter III batch 1'
+            git push origin HEAD:main
+          fi
+
+      - name: Gerar patch pronto para v1.0.4
+        shell: bash
+        run: |
+          set -euo pipefail
+          root='/tmp/ready/SF3_Expansion_Batch1_v1.1.0_READY'
+          rm -rf /tmp/ready
+          mkdir -p "$root/chars" "$root/stages" "$root/sound" "$root/data"
+          for c in Alex Dudley Urien Gill Ibuki; do cp -a "chars/$c" "$root/chars/"; done
+          cp stages/FallsNightTX.def stages/FallsNightTX.sff "$root/stages/"
+          cp stages/TrainStation2022.def stages/TrainStation2022.sff "$root/stages/"
+          cp sound/THEME.mp3 sound/J.mp3 "$root/sound/"
+          cp data/select.def "$root/data/select.def"
+          cp LEIA-ME-EXPANSAO-SF3.txt EXPANSAO-SF3-VALIDACAO.json "$root/"
+          cd /tmp/ready
+          zip -qr -9 /tmp/SF3_Expansion_Batch1_v1.1.0_READY.zip SF3_Expansion_Batch1_v1.1.0_READY
+          sha256sum /tmp/SF3_Expansion_Batch1_v1.1.0_READY.zip > /tmp/SF3_Expansion_Batch1_v1.1.0_READY.zip.sha256
+
+      - name: Publicar Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag='v1.1.0-storm'
+          target=$(git rev-parse HEAD)
+          cat > /tmp/notes.md <<'EOF'
+          # Street Fighter Alpha Zero — Expansao SF3 v1.1.0
+
+          Primeiro lote importado do Mugen fornecido pelo Google Drive.
+
+          Adicionados: Alex, Dudley, Urien, Gill e Ibuki; fases FallsNightTX e TrainStation2022; BGMs THEME.mp3 e J.mp3.
+
+          O WATCH INFINITO e o hotfix de ranking da v1.0.4 foram preservados. O arquivo `SF3_Expansion_Batch1_v1.1.0_READY.zip` pode ser extraido diretamente sobre uma instalacao limpa da v1.0.4, confirmando a substituicao do `data/select.def`.
+          EOF
+          gh release delete "$tag" --cleanup-tag --yes >/dev/null 2>&1 || true
+          gh release create "$tag" \
+            /tmp/SF3_Expansion_Batch1_v1.1.0_READY.zip \
+            /tmp/SF3_Expansion_Batch1_v1.1.0_READY.zip.sha256 \
+            --target "$target" \
+            --title 'Street Fighter Alpha Zero — Expansao SF3 v1.1.0' \
+            --notes-file /tmp/notes.md
+
+  full_build:
+    needs: integrate
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    continue-on-error: true
+    steps:
+      - name: Baixar versao atualizada completa
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          lfs: true
+
+      - name: Montar pacote completo
+        shell: bash
+        run: |
+          set -euo pipefail
+          git lfs pull
+          root='/tmp/full/Street_Fighter_Alpha_Zero_SF3_v1.1.0'
+          mkdir -p "$root"
+          rsync -a --exclude='.git/' --exclude='.github/' "$GITHUB_WORKSPACE/" "$root/"
+          cd /tmp/full
+          zip -qr -0 /tmp/Street_Fighter_Alpha_Zero_SF3_v1.1.0_COMPLETO.zip Street_Fighter_Alpha_Zero_SF3_v1.1.0
+          sha256sum /tmp/Street_Fighter_Alpha_Zero_SF3_v1.1.0_COMPLETO.zip > /tmp/Street_Fighter_Alpha_Zero_SF3_v1.1.0_COMPLETO.zip.sha256
+
+      - name: Anexar pacote completo a Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload v1.1.0-storm \
+            /tmp/Street_Fighter_Alpha_Zero_SF3_v1.1.0_COMPLETO.zip \
+            /tmp/Street_Fighter_Alpha_Zero_SF3_v1.1.0_COMPLETO.zip.sha256 \
+            --clobber
