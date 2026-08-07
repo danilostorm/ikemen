@@ -1,33 +1,59 @@
-# Ikemen GO – Street Fighter Alpha/Zero
+# Ikemen GO – Street Fighter Alpha/Zero LIVE
 
-Versão completa para Windows baseada no **Ikemen GO v1.0.0-rc.2**, preparada para continuarmos adicionando personagens, fases, modos e personalizações.
+Projeto baseado no **Ikemen GO v1.0.0-rc.2 para Windows**, customizado para uma live contínua de **CPU vs CPU**.
 
-## Conteúdo
+## Estado atual — v1.3.0 Storm Live
 
-- 45 personagens do pacote Street Fighter Alpha/Zero
-- 131 fases do pacote
-- 48 personagens selecionáveis ao todo, contando os 3 personagens de teste originais do Ikemen
-- músicas copiadas para `sound/`
-- personagens comuns, especiais e chefes organizados por ordem no modo Arcade
-- correção da música ausente da fase `_Boss-Mike.def`, que agora usa `sound/Mike.mp3`
-- arquivo original de seleção preservado como `data/select.original.def`
+O projeto mantém o roster Street Fighter Alpha/Zero e adiciona personagens extras para aumentar a variedade das lutas.
 
-## Repositório completo
+Personagens extras atualmente integrados:
 
-Os executáveis, personagens, fases, músicas, sprites, configurações e demais arquivos da montagem ficam versionados neste repositório.
+- Alex
+- Dudley
+- Urien
+- Gill
+- Ibuki
+- Makoto
+- Hugo
+- Oro
+- Q
+- Necro
+- Elena
+- Remy
+- Twelve
+- Sean
+- Yang
+- Yun
+- Juri
+- C. Viper
+- Poison
+- Haggar
 
-## Download pronto
+## WATCH INFINITO para live
 
-A versão compactada para Windows fica disponível na seção **Releases**, na tag `v1.0.0-storm`.
+O arquivo `external/script/infinitewatch.lua` contém o modo automático preparado para transmissão longa:
 
-## Inicialização
+- CPU nível **8** fixo nos dois lados
+- nível da CPU aplicado **depois** da seleção dos personagens
+- AI auto-ramping desativado no Watch
+- troca automática de lutadores ao terminar cada luta
+- rotação por **shuffle bag**, reduzindo bastante repetições antes de reutilizar o elenco
+- evita mirror match e repetição imediata quando possível
+- evita repetir imediatamente a mesma fase
+- contador de lutas e matchup registrados no console
+- proteção com `pcall` para tentar recuperar a rotação de erros Lua de matchup sem encerrar toda a sessão
+- `Esc` continua retornando ao menu
 
-Extraia o ZIP da Release e execute `Ikemen_GO.exe`.
+## Arquivos no GitHub
 
-## Integridade
+O GitHub mantém os scripts e configurações que controlam a montagem. Os pacotes binários completos de personagens, sprites e sons são distribuídos separadamente porque são grandes demais para um fluxo prático pelo Contents API.
 
-SHA-256 do ZIP da Release:
+## Estrutura principal
 
-```text
-46bc9c80c8dec632d90db1ede36fba1abfbb6b13231183162fa5e859f23e181d
-```
+- `data/select.def` — roster e fases
+- `external/script/infinitewatch.lua` — automação da live CPU vs CPU
+- `save/config.json` — configurações do Ikemen
+
+## Observação sobre IA
+
+O Ikemen entrega AI Level 8 aos dois lados no Watch, mas personagens antigos de MUGEN podem possuir lógica interna de IA diferente. Por isso alguns lutadores ainda podem ser naturalmente mais fortes ou mais inteligentes do que outros mesmo recebendo o mesmo nível do engine.
