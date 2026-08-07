@@ -1,0 +1,4 @@
+Release v1.4.0-storm validada.
+ZIP: SFAZ_Live_HyperDBZ_Guests_v1.4.0.zip
+SHA256: SFAZ_Live_HyperDBZ_Guests_v1.4.0.zip.sha256
+Build: Hyper DBZ official 6.0c source, published directly to Releases without upload-artifact.
