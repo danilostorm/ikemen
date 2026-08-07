@@ -1,0 +1,32 @@
+MUGEN STORM - Infinite Battle Arena v1.5.0
+==============================================
+
+Atualização focada em live CPU vs CPU.
+
+NOVIDADES
+- Identidade: MUGEN STORM - Infinite Battle Arena.
+- WATCH INFINITO passa a aparecer como STORM LIVE HARD.
+- IA máxima (AILevel 8) mantida para os dois lados.
+- Dan recebeu IA STORM dedicada: defesa, anti-air, zoning, pressão, combo cancel e uso de super.
+- C. Viper recebeu IA STORM dedicada: defesa, anti-air, Seismic Hammer, Thunder Knuckle, Burning Kick, pressão e super.
+- Sean recebeu IA STORM dedicada: defesa, anti-air, Tackle, Tornado e uso inteligente dos supers conforme o modo ativo.
+- Fases agora usam shuffle-bag: percorre melhor o pool antes de repetir.
+- Matchup que causar erro Lua recuperável é bloqueado pelo resto da sessão.
+- Elenco continua usando shuffle-bag para reduzir repetição de personagens.
+
+AUDITORIA
+A auditoria não saiu alterando todo personagem. A maioria dos 45 lutadores Alpha/Zero já possui IA própria. Makoto tem uma camada detalhada em m-2.cns e foi preservada. Os convidados Hyper DBZ também já possuem IA avançada baseada em AILevel e foram preservados.
+
+INSTALAÇÃO
+1. Feche o jogo.
+2. Extraia o ZIP na pasta principal da versão atual.
+3. Confirme a substituição.
+4. Abra MUGEN_STORM.bat ou Street Fighter AZ.exe.
+5. Entre em STORM LIVE HARD.
+6. ESC continua voltando ao menu.
+
+ROLLBACK
+Os CMD anteriores de Dan, C. Viper e Sean estão em backup_v1.4.
+
+IMPORTANTE
+Validação estática e sintaxe Lua foram verificadas. O teste visual/runtime final precisa ser feito no Windows com o executável personalizado.

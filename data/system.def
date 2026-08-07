@@ -1,6 +1,6 @@
 ;----------------------------
 [Info]
-name = "Street Fighter Alpha Zero"
+name = "MUGEN STORM - Infinite Battle Arena"
 author = "AgentEd"
 versiondate = 09,01,2009
 mugenversion = 1.0
@@ -107,7 +107,7 @@ menu.itemname.vs100kumite = "VS100 KUMITE"
 menu.itemname.timeattack = "TIME ATTACK"   
 menu.itemname.worldtour = "WORLD TOUR"                      
 menu.itemname.training = "TRAINING"    
-menu.itemname.watch = "WATCH INFINITO"
+menu.itemname.watch = "STORM LIVE HARD"
 menu.itemname.options = "OPTIONS"
 
 menu.itemname.menuexit = "EXIT GAME"
@@ -523,7 +523,7 @@ title.scale = 1.0, 1.0
 	title.teamversus.text = "Versus"
 	title.vs100kumite.text = "VS100 Kumite"
 	title.freebattle.text = "Free Battle"
-	title.watch.text = "Watch Infinito"
+	title.watch.text = "MUGEN STORM - CPU vs CPU"
 	title.training.text = "Training"
 	title.timeattack.text = "Time Attack"
 	title.survival.text = "Survival"
