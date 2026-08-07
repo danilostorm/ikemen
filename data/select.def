@@ -36,11 +36,11 @@ SFZ_Rolento,		stages/Rolento.def,	includestage =0,	order = 2, ordersurvival= 2
 SFZ_Adon,		stages/Adon.def,	includestage =0,	order = 3, ordersurvival= 2
 SFZ_Zangief,		stages/Zangief.def,	includestage =0,	order = 3, ordersurvival= 2
 SFZ_Birdie,		Stages/Birdie.def,	includestage =0,	order = 2, ordersurvival= 2
-EMPTY
-EMPTY
-EMPTY
-EMPTY
-EMPTY
+Makoto, stages/FallsNightTX.def, includestage = 0, order = 2, ordersurvival = 2
+Hugo, stages/TrainStation2022.def, includestage = 0, order = 3, ordersurvival = 2
+Oro, stages/FallsNightTX.def, includestage = 0, order = 3, ordersurvival = 2
+Q, stages/TrainStation2022.def, includestage = 0, order = 3, ordersurvival = 2
+Necro, stages/FallsNightTX.def, includestage = 0, order = 2, ordersurvival = 2
 ;--------------------
 ; Row 3
 EMPTY
@@ -51,18 +51,18 @@ SFZ_Dan,		stages/Dan.def, 	includestage =0,	order = 2
   }
  slot = {
 	SFZ_Gen-Z,		stages/Gen.def, 	includestage =0,	order = 3, ordersurvival= 2, previous=d, next=w
-	SFZ_Gen-X,		stages/Gen2.def, 	includestage =0,	order = 0, ordersurvival= 0, previous=d, next=w
+	SFZ_Gen-X,		stages/Gen2.def,	includestage =0,	order = 0, ordersurvival= 0, previous=d, next=w
   }
  slot = {
 	SFZ_Sodom-Z,	stages/Sodom-Z.def,	includestage =0,	order = 2, ordersurvival= 2, previous=d, next=w
 	SFZ_Sodom-X,	stages/Sodom-X.def,	includestage =0,	order = 0, ordersurvival= 0, previous=d, next=w
   }
 SFZ_Dhalsim,		stages/Dhalsim.def,	includestage =0,	order = 3, ordersurvival= 2
-EMPTY
-EMPTY
-EMPTY
-EMPTY
-EMPTY
+Elena, stages/Africa.def, includestage = 0, order = 2, ordersurvival = 2
+Remy, stages/London.def, includestage = 0, order = 2, ordersurvival = 2
+Twelve, stages/Dolls2.def, includestage = 0, order = 2, ordersurvival = 2
+Sean, stages/Ryu2.def, includestage = 0, order = 2, ordersurvival = 2
+Yang, stages/FallsNightTX.def, includestage = 0, order = 2, ordersurvival = 2
 ;--------------------
 ; Row 4
 EMPTY
@@ -77,11 +77,11 @@ SFZ_Karin,		stages/Karin.def,	includestage =0,	order = 2
   }
 SFZ_Guile,		stages/Guile.def,	includestage =0,	order = 3, ordersurvival= 2
 SFZ_Blanka,		stages/Blanka.def,	includestage =0,	order = 2, ordersurvival= 2
-EMPTY
-EMPTY
-EMPTY
-EMPTY
-EMPTY
+Yun, stages/TrainStation2022.def, includestage = 0, order = 2, ordersurvival = 2
+Juri, stages/Shadaloo.def, includestage = 0, order = 2, ordersurvival = 2
+C.Viper/C.Viper.def, stages/Vtol.def, includestage = 0, order = 2, ordersurvival = 2
+Poison, stages/TrainStation2022.def, includestage = 0, order = 2, ordersurvival = 2
+Haggar, stages/Mike.def, includestage = 0, order = 2, ordersurvival = 2
 ;--------------------
 ; Row 5
 EMPTY
