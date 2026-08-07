@@ -1,37 +1,76 @@
--- Continuous CPU vs CPU watch mode.
--- Randomizes both fighters and the stage after each completed match.
+-- Continuous CPU vs CPU watch mode optimized for long livestreams.
+-- Uses a shuffled roster bag to reduce repeats and fixed maximum AI.
 -- Press Esc at any time to return to the title menu.
 local infinitewatch = {}
 
--- Prevent the custom engine from keeping require() in a temporary loading state.
 package.loaded['external.script.infinitewatch'] = infinitewatch
 
--- Ikemen AILevel ranges from 1 to 8. Infinite Watch always uses the maximum
--- so CPU vs CPU matches stay competitive regardless of the saved Difficulty.
+-- Ikemen AILevel ranges from 1 to 8. Livestream Watch always uses max AI.
 local WATCH_AI_LEVEL = 8
 
-local function f_randomChar(excluded, previous)
+-- Shuffle-bag rotation: every registered random character is used before
+-- the roster is shuffled again (apart from the unavoidable cycle boundary).
+local charBag = {}
+local charBagPos = 1
+
+local function f_shuffle(t)
+	for i = #t, 2, -1 do
+		local j = math.random(i)
+		t[i], t[j] = t[j], t[i]
+	end
+end
+
+local function f_refillCharBag()
+	charBag = {}
+	for _, ref in ipairs(main.t_randomChars) do
+		charBag[#charBag + 1] = ref
+	end
+	f_shuffle(charBag)
+	charBagPos = 1
+end
+
+local function f_takeChar(excluded, previous)
 	if #main.t_randomChars == 0 then
 		return nil
+	elseif #main.t_randomChars == 1 then
+		return main.t_randomChars[1]
 	end
-	local candidate = main.t_randomChars[math.random(1, #main.t_randomChars)]
-	if #main.t_randomChars == 1 then
-		return candidate
+
+	if charBagPos > #charBag then
+		f_refillCharBag()
 	end
-	for _ = 1, 32 do
-		candidate = main.t_randomChars[math.random(1, #main.t_randomChars)]
-		if candidate ~= excluded and candidate ~= previous then
-			return candidate
+
+	local function f_findValid()
+		for i = charBagPos, #charBag do
+			if charBag[i] ~= excluded and charBag[i] ~= previous then
+				return i
+			end
 		end
+		return nil
 	end
-	if candidate == excluded then
-		for _, ref in ipairs(main.t_randomChars) do
-			if ref ~= excluded then
-				return ref
+
+	local pick = f_findValid()
+	if pick == nil then
+		-- End of a bag can leave only a recently used fighter. Start a fresh
+		-- shuffled bag rather than forcing an immediate rematch/mirror match.
+		f_refillCharBag()
+		pick = f_findValid()
+	end
+	if pick == nil then
+		-- Very small rosters: at least avoid a mirror when possible.
+		for i = charBagPos, #charBag do
+			if charBag[i] ~= excluded then
+				pick = i
+				break
 			end
 		end
 	end
-	return candidate
+	pick = pick or charBagPos
+
+	charBag[charBagPos], charBag[pick] = charBag[pick], charBag[charBagPos]
+	local ret = charBag[charBagPos]
+	charBagPos = charBagPos + 1
+	return ret
 end
 
 local function f_randomStage(previous)
@@ -53,7 +92,6 @@ function infinitewatch.run()
 	esc(false)
 	setGameMode('watch')
 	setHomeTeam(1)
-	-- Keep automatic ramping disabled: both CPUs must remain at the hard cap.
 	setAutoLevel(false)
 
 	main.cpuSide = {true, true}
@@ -66,25 +104,23 @@ function infinitewatch.run()
 	main.lifebar.bars = true
 	main.lifebar.p1aiLevel = false
 	main.lifebar.p2aiLevel = false
-	-- The rank mod expects selection tables created by the normal select screen.
-	-- Infinite Watch selects fighters directly, so ranking must stay disabled.
 	main.rankDisplay = false
 
 	local previousP1 = nil
 	local previousP2 = nil
 	local previousStage = nil
+	local matchCount = 0
+	f_refillCharBag()
 
 	while not esc() do
-		-- Some menu hooks can enable ranking for gamemode('watch'). Force it off
-		-- before every match so the rank hook cannot interrupt the rotation.
 		main.rankDisplay = false
 		clearSelected()
 		setMatchNo(1)
 		setTeamMode(1, 0, 1)
 		setTeamMode(2, 0, 1)
 
-		local p1 = f_randomChar(previousP2, previousP1)
-		local p2 = f_randomChar(p1, previousP2)
+		local p1 = f_takeChar(previousP2, previousP1)
+		local p2 = f_takeChar(p1, previousP2)
 		if p1 == nil or p2 == nil then
 			break
 		end
@@ -92,20 +128,27 @@ function infinitewatch.run()
 		selectChar(1, p1, getCharRandomPalette(p1))
 		selectChar(2, p2, getCharRandomPalette(p2))
 
-		-- Apply CPU control only after the fighters are selected. This mirrors
-		-- Ikemen's normal match setup and prevents the selection step from
-		-- replacing/resetting the requested AI strength.
+		-- Important: CPU control is applied after selection so character loading
+		-- cannot reset the requested AI level.
 		setCom(1, WATCH_AI_LEVEL)
 		setCom(2, WATCH_AI_LEVEL)
 
 		local stage = f_randomStage(previousStage)
-		start.f_setMusic(stage)
-		loadStart()
-		game()
+		matchCount = matchCount + 1
+		print(string.format('[Infinite Watch] Match %d | P1=%s | P2=%s | AI=%d', matchCount, tostring(p1), tostring(p2), WATCH_AI_LEVEL))
+
+		-- A Lua/runtime error from one matchup should not necessarily kill a
+		-- 24/7 stream. When possible, log it and continue with the next draw.
+		local ok, err = pcall(function()
+			start.f_setMusic(stage)
+			loadStart()
+			game()
+		end)
+		if not ok then
+			print('[Infinite Watch] Match error: ' .. tostring(err))
+		end
 		clearColor(0, 0, 0)
 
-		-- endMatch() is also used after a normal completed match.
-		-- Only Esc should leave the infinite watch loop.
 		if esc() then
 			break
 		end
