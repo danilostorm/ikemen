@@ -6,10 +6,9 @@ local infinitewatch = {}
 -- Prevent the custom engine from keeping require() in a temporary loading state.
 package.loaded['external.script.infinitewatch'] = infinitewatch
 
-local function f_aiLevel()
-	local level = tonumber(config.Difficulty) or 8
-	return math.max(1, math.min(8, level))
-end
+-- Ikemen AILevel ranges from 1 to 8. Infinite Watch always uses the maximum
+-- so CPU vs CPU matches stay competitive regardless of the saved Difficulty.
+local WATCH_AI_LEVEL = 8
 
 local function f_randomChar(excluded, previous)
 	if #main.t_randomChars == 0 then
@@ -54,6 +53,7 @@ function infinitewatch.run()
 	esc(false)
 	setGameMode('watch')
 	setHomeTeam(1)
+	-- Keep automatic ramping disabled: both CPUs must remain at the hard cap.
 	setAutoLevel(false)
 
 	main.cpuSide = {true, true}
@@ -70,7 +70,6 @@ function infinitewatch.run()
 	-- Infinite Watch selects fighters directly, so ranking must stay disabled.
 	main.rankDisplay = false
 
-	local aiLevel = f_aiLevel()
 	local previousP1 = nil
 	local previousP2 = nil
 	local previousStage = nil
@@ -83,8 +82,6 @@ function infinitewatch.run()
 		setMatchNo(1)
 		setTeamMode(1, 0, 1)
 		setTeamMode(2, 0, 1)
-		setCom(1, aiLevel)
-		setCom(2, aiLevel)
 
 		local p1 = f_randomChar(previousP2, previousP1)
 		local p2 = f_randomChar(p1, previousP2)
@@ -94,6 +91,12 @@ function infinitewatch.run()
 
 		selectChar(1, p1, getCharRandomPalette(p1))
 		selectChar(2, p2, getCharRandomPalette(p2))
+
+		-- Apply CPU control only after the fighters are selected. This mirrors
+		-- Ikemen's normal match setup and prevents the selection step from
+		-- replacing/resetting the requested AI strength.
+		setCom(1, WATCH_AI_LEVEL)
+		setCom(2, WATCH_AI_LEVEL)
 
 		local stage = f_randomStage(previousStage)
 		start.f_setMusic(stage)
