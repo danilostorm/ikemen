@@ -1,0 +1,7 @@
+Release v1.5.0-storm validada.
+Nome: MUGEN STORM - Infinite Battle Arena
+Modo: STORM LIVE HARD
+IA: AILevel 8 + reforço dedicado em Dan, C. Viper e Sean
+ZIP: MUGEN_STORM_v1.5.0_IA_LIVE_HARD.zip
+SHA256: MUGEN_STORM_v1.5.0_IA_LIVE_HARD.zip.sha256
+Publicação direta em Releases, sem armazenamento de artifact.
