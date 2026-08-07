@@ -224,7 +224,7 @@ function infinitewatch.run()
 	esc(false)
 	main.f_bgReset(motif[main.background].bg)
 	main.f_fadeReset('fadein', motif[main.group])
-	main.f_playBGM(true, motif.music.title_bgm, motif.music.title_bgm_loop, motif.music.title_bgm_volume, motif.music.title_bgm_loopstart, motif.music.title_bgm_volume, motif.music.title_bgm_loopend)
+	main.f_playBGM(true, motif.music.title_bgm, motif.music.title_bgm_loop, motif.music.title_bgm_volume, motif.music.title_bgm_loopstart, motif.music.title_bgm_loopend)
 end
 
 return infinitewatch
