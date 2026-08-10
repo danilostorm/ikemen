@@ -1,8 +1,0 @@
-Evil Ken importado para a branch storm-boss-pack-v1.6.1.
-Identidade: Evil Ken
-Roster: order 4 / ordersurvival 0
-Infinite Watch: não alterado
-Bridge: não alterado
-Stage associado: stages/Ken3.def
-Storyboards Arcade: desativados
-Paleta ativa: pal01.act
