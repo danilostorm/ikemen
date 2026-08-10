@@ -1,0 +1,22 @@
+; STORM integration wrapper for Ultimate Ken
+[Info]
+name = "Ultimate Ken"
+displayname = "Ultimate Ken"
+versiondate = 09,09,2021
+mugenversion = 1.0
+author = "ELECTR0"
+pal.defaults = 1
+
+[Files]
+sprite = UltimateKen.sff
+anim = UltimateKen.air
+sound = UltimateKen.snd
+cmd = UltimateKen.cmd
+cns = UltimateKen.cns
+stcommon = common1.cns
+st = UltimateKen.cns
+pal1 = pal01.act
+
+[Arcade]
+intro.storyboard =
+ending.storyboard =

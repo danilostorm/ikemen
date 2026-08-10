@@ -1,0 +1,22 @@
+; STORM integration wrapper for Evil Ken SSF'2 Plus
+[Info]
+name = "Evil Ken"
+displayname = "Evil Ken"
+versiondate = 05,28,2012
+mugenversion = 1.0
+author = "Guille_N_Roll"
+pal.defaults = 1
+
+[Files]
+cmd = EvilKenSSF2Plus.cmd
+cns = EvilKenSSF2Plus.cns
+st = EvilKenSSF2Plus.cns
+stcommon = common1.cns
+sprite = EvilKenSSF2Plus.sff
+anim = EvilKenSSF2Plus.air
+sound = EvilKenSSF2Plus.snd
+pal1 = pal01.act
+
+[Arcade]
+intro.storyboard =
+ending.storyboard =
