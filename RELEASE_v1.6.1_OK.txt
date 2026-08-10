@@ -1,0 +1,9 @@
+Release v1.6.1-storm validada.
+Pacote: MUGEN_STORM_v1.6.1_BOSS_PACK.zip
+Lutadores: Evil Ken, Ultimate Ken, Ultimate Ryu
+Tier: order 4 / ordersurvival 0
+Infinite Watch: intacto
+STORM_Bridge: intacto
+Backup do select.def v1.6.0: incluído
+Rollback: incluído
+Runtime final: validar no Windows antes de merge definitivo na main
