@@ -1,0 +1,256 @@
+name: Publicar MUGEN STORM v1.6.1 Boss Pack
+
+on:
+  push:
+    branches:
+      - storm-boss-pack-v1.6.1
+    paths:
+      - '.github/workflows/publicar-v1.6.1-boss-pack.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout Boss Pack
+        uses: actions/checkout@v4
+        with:
+          ref: storm-boss-pack-v1.6.1
+          fetch-depth: 0
+
+      - name: Atualizar referência da main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main --depth=1
+
+      - name: Proteger STORM LIVE HARD e Bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --exit-code origin/main -- external/script/infinitewatch.lua external/script/main.lua STORM_Bridge
+          echo '[OK] Infinite Watch, loader e STORM_Bridge não foram alterados pelo Boss Pack.'
+
+      - name: Validar os três bosses
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+
+          chars = {
+              'EvilKenSSF2Plus': {
+                  'name': 'Evil Ken',
+                  'min_sff': 8_000_000,
+                  'min_snd': 7_000_000,
+              },
+              'UltimateKen': {
+                  'name': 'Ultimate Ken',
+                  'min_sff': 5_000_000,
+                  'min_snd': 10_000_000,
+              },
+              'UltimateRyu': {
+                  'name': 'Ultimate Ryu',
+                  'min_sff': 8_000_000,
+                  'min_snd': 18_000_000,
+              },
+          }
+
+          for folder, spec in chars.items():
+              root = Path('chars') / folder
+              deffile = root / f'{folder}.def'
+              if not deffile.is_file():
+                  raise SystemExit(f'Missing DEF: {deffile}')
+              text = deffile.read_text(encoding='utf-8', errors='replace')
+              if f'name = "{spec["name"]}"' not in text:
+                  raise SystemExit(f'Identity mismatch: {folder}')
+              if 'intro.storyboard =\n' not in text and 'intro.storyboard =\r\n' not in text:
+                  raise SystemExit(f'Arcade intro not disabled: {folder}')
+              if 'ending.storyboard =\n' not in text and 'ending.storyboard =\r\n' not in text:
+                  raise SystemExit(f'Arcade ending not disabled: {folder}')
+
+              files = {}
+              in_files = False
+              for raw in text.splitlines():
+                  line = raw.strip()
+                  if line.lower() == '[files]':
+                      in_files = True
+                      continue
+                  if in_files and line.startswith('['):
+                      break
+                  if in_files and '=' in line and not line.startswith(';'):
+                      k, v = line.split('=', 1)
+                      files[k.strip().lower()] = v.strip().replace('\\', '/')
+
+              for key in ('cmd','cns','st','stcommon','sprite','anim','sound','pal1'):
+                  value = files.get(key)
+                  if not value:
+                      raise SystemExit(f'Missing {key} in {deffile}')
+                  target = root / value
+                  if not target.is_file():
+                      raise SystemExit(f'{folder}: referenced file not found: {value}')
+
+              sff = root / files['sprite']
+              snd = root / files['sound']
+              if sff.stat().st_size <= spec['min_sff']:
+                  raise SystemExit(f'SFF unexpectedly small: {sff}')
+              if snd.stat().st_size <= spec['min_snd']:
+                  raise SystemExit(f'SND unexpectedly small: {snd}')
+              if not sff.read_bytes()[:11].startswith(b'ElecbyteSpr'):
+                  raise SystemExit(f'Invalid SFF header: {sff}')
+              if not snd.read_bytes()[:11].startswith(b'ElecbyteSnd'):
+                  raise SystemExit(f'Invalid SND header: {snd}')
+
+              print(f'[OK] {spec["name"]}: arquivos e referências validados')
+
+          select = Path('data/select.def').read_text(encoding='utf-8')
+          expected = [
+              'EvilKenSSF2Plus, stages/Ken3.def, includestage = 0, order = 4, ordersurvival = 0',
+              'UltimateKen, stages/Ken.def, includestage = 0, order = 4, ordersurvival = 0',
+              'UltimateRyu, stages/Ryu.def, includestage = 0, order = 4, ordersurvival = 0',
+          ]
+          for line in expected:
+              if line not in select:
+                  raise SystemExit(f'Missing select entry: {line}')
+          print('[OK] select.def contém os três bosses no tier order 4')
+          PY
+
+      - name: Montar atualização incremental
+        shell: bash
+        run: |
+          set -euo pipefail
+          PKG=/tmp/MUGEN_STORM_v1.6.1_BOSS_PACK
+          rm -rf "$PKG"
+          mkdir -p "$PKG/chars" "$PKG/data"
+
+          cp -a chars/EvilKenSSF2Plus "$PKG/chars/"
+          cp -a chars/UltimateKen "$PKG/chars/"
+          cp -a chars/UltimateRyu "$PKG/chars/"
+          cp data/select.def "$PKG/data/select.def"
+          git show origin/main:data/select.def > "$PKG/data/select.v1.6.0-backup.def"
+
+          cat > "$PKG/LEIA-ME-BOSS-PACK-v1.6.1.txt" <<'EOF'
+          MUGEN STORM - Infinite Battle Arena v1.6.1
+          BOSS PACK
+          ==========================================
+
+          ATUALIZAÇÃO INCREMENTAL
+          Extraia este ZIP por cima da instalação atual do MUGEN STORM v1.6.0.
+
+          NOVOS LUTADORES
+          - Evil Ken
+          - Ultimate Ken
+          - Ultimate Ryu
+
+          INTEGRAÇÃO STORM
+          - Os três entram no roster normal do select.def.
+          - STORM LIVE HARD / Infinite Watch não foi alterado.
+          - STORM_Bridge não foi alterado.
+          - Os três participam automaticamente da rotação CPU vs CPU.
+          - Tier de arcade: order 4 / ordersurvival 0.
+          - Identidades separadas para o Battle League/site.
+
+          INSTALAÇÃO
+          1. Feche o MUGEN STORM.
+          2. Faça uma cópia de segurança da pasta atual, se desejar.
+          3. Extraia todo o conteúdo deste ZIP na raiz do MUGEN STORM.
+          4. Confirme a substituição de data/select.def.
+          5. Abra MUGEN_STORM.bat.
+          6. Entre em STORM LIVE HARD e valide algumas lutas.
+
+          ROLLBACK
+          Execute ROLLBACK_BOSS_PACK_v1.6.1.bat para restaurar o select.def da v1.6.0.
+          As pastas dos novos personagens podem permanecer instaladas; fora do select.def elas ficam inativas.
+
+          IMPORTANTE
+          O pacote passou por validação estática de DEF/CMD/CNS/AIR/SFF/SND, referências, headers Elecbyte e select.def.
+          O teste final de runtime precisa ser feito no Windows com o executável personalizado do projeto.
+          EOF
+
+          cat > "$PKG/ROLLBACK_BOSS_PACK_v1.6.1.bat" <<'EOF'
+          @echo off
+          cd /d "%~dp0"
+          if not exist "data\select.v1.6.0-backup.def" (
+            echo [ERRO] Backup data\select.v1.6.0-backup.def nao encontrado.
+            pause
+            exit /b 1
+          )
+          copy /Y "data\select.v1.6.0-backup.def" "data\select.def" >nul
+          echo [OK] select.def da v1.6.0 restaurado. Os novos chars ficaram inativos.
+          pause
+          EOF
+
+      - name: Validar pacote incremental
+        shell: bash
+        run: |
+          set -euo pipefail
+          PKG=/tmp/MUGEN_STORM_v1.6.1_BOSS_PACK
+          test -f "$PKG/data/select.def"
+          test -f "$PKG/data/select.v1.6.0-backup.def"
+          test -f "$PKG/LEIA-ME-BOSS-PACK-v1.6.1.txt"
+          test -f "$PKG/ROLLBACK_BOSS_PACK_v1.6.1.bat"
+          for c in EvilKenSSF2Plus UltimateKen UltimateRyu; do
+            test -f "$PKG/chars/$c/$c.def"
+            test -f "$PKG/chars/$c/$c.sff"
+            test -f "$PKG/chars/$c/$c.snd"
+          done
+          ! find "$PKG" -path '*/external/script/infinitewatch.lua' -print -quit | grep -q .
+          ! find "$PKG" -path '*/STORM_Bridge/*' -print -quit | grep -q .
+          echo '[OK] Pacote contém somente Boss Pack + select + backup/documentação.'
+
+      - name: Criar ZIP e SHA-256
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp/MUGEN_STORM_v1.6.1_BOSS_PACK
+          zip -r -9 /tmp/MUGEN_STORM_v1.6.1_BOSS_PACK.zip . >/dev/null
+          cd /tmp
+          unzip -tq MUGEN_STORM_v1.6.1_BOSS_PACK.zip
+          sha256sum MUGEN_STORM_v1.6.1_BOSS_PACK.zip > MUGEN_STORM_v1.6.1_BOSS_PACK.zip.sha256
+          ls -lh MUGEN_STORM_v1.6.1_BOSS_PACK.zip
+          cat MUGEN_STORM_v1.6.1_BOSS_PACK.zip.sha256
+
+      - name: Publicar Release v1.6.1-storm
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release delete v1.6.1-storm --yes --cleanup-tag 2>/dev/null || true
+          gh release create v1.6.1-storm \
+            /tmp/MUGEN_STORM_v1.6.1_BOSS_PACK.zip \
+            /tmp/MUGEN_STORM_v1.6.1_BOSS_PACK.zip.sha256 \
+            --target storm-boss-pack-v1.6.1 \
+            --title 'MUGEN STORM v1.6.1 - Boss Pack' \
+            --notes 'Atualização incremental para o MUGEN STORM v1.6.0. Adiciona Evil Ken, Ultimate Ken e Ultimate Ryu como lutadores independentes de tier Boss (order 4). STORM LIVE HARD / Infinite Watch e STORM_Bridge permanecem intactos; os novos personagens entram automaticamente na rotação através do select.def. Inclui backup do select.def anterior e rollback. Extraia por cima da instalação atual e valide no Windows antes de considerar a atualização definitiva.'
+
+      - name: Confirmar assets e registrar Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          ASSETS=$(gh release view v1.6.1-storm --json assets --jq '.assets[].name')
+          echo "$ASSETS" | grep -Fx 'MUGEN_STORM_v1.6.1_BOSS_PACK.zip'
+          echo "$ASSETS" | grep -Fx 'MUGEN_STORM_v1.6.1_BOSS_PACK.zip.sha256'
+          cat > RELEASE_v1.6.1_OK.txt <<'EOF'
+          Release v1.6.1-storm validada.
+          Pacote: MUGEN_STORM_v1.6.1_BOSS_PACK.zip
+          Lutadores: Evil Ken, Ultimate Ken, Ultimate Ryu
+          Tier: order 4 / ordersurvival 0
+          Infinite Watch: intacto
+          STORM_Bridge: intacto
+          Backup do select.def v1.6.0: incluído
+          Rollback: incluído
+          Runtime final: validar no Windows antes de merge definitivo na main
+          EOF
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add RELEASE_v1.6.1_OK.txt
+          git commit -m 'Valida Release v1.6.1-storm'
+          git push origin HEAD:storm-boss-pack-v1.6.1
