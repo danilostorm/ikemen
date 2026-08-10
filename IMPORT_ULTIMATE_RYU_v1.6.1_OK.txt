@@ -1,8 +1,0 @@
-Ultimate Ryu importado para a branch storm-boss-pack-v1.6.1.
-Identidade: Ultimate Ryu
-Roster: order 4 / ordersurvival 0
-Infinite Watch: não alterado
-Bridge: não alterado
-Stage associado: stages/Ryu.def
-Storyboards Arcade: desativados
-Paleta ativa: pal01.act
