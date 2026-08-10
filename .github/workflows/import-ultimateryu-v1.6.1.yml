@@ -1,0 +1,96 @@
+name: Importar Ultimate Ryu v1.6.1
+
+on:
+  push:
+    branches:
+      - storm-boss-pack-v1.6.1
+    paths:
+      - '.github/workflows/import-ultimateryu-v1.6.1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  importar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout da branch Boss Pack
+        uses: actions/checkout@v4
+        with:
+          ref: storm-boss-pack-v1.6.1
+          fetch-depth: 0
+
+      - name: Baixar payload do Ultimate Ryu
+        shell: bash
+        env:
+          SMALL_URL: 'https://sdmntprnorthcentralus.oaiusercontent.com/files/00000000-6b0c-822f-8cc7-f2c571b78f77/raw?se=2026-08-10T14%3A49%3A51Z&sp=r&sv=2026-02-06&sr=b&scid=6f55b801-a70c-5ea1-8f8e-7bea14267149&skoid=33096a49-a96b-4506-9fc4-04a7517f8175&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-10T11%3A59%3A13Z&ske=2026-08-11T11%3A59%3A13Z&sks=b&skv=2026-02-06&sig=PrpsFdwON0lv5YQhBGEi36EsHRAaVfhp%2B9vG6gLd4U4%3D'
+          SFF_URL: 'https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-49c4-820e-9135-8b02a6115dbe/raw?se=2026-08-10T14%3A49%3A59Z&sp=r&sv=2026-02-06&sr=b&scid=564c5630-7f34-5901-baa7-c43a13ffe8c2&skoid=33096a49-a96b-4506-9fc4-04a7517f8175&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-10T12%3A34%3A23Z&ske=2026-08-11T12%3A34%3A23Z&sks=b&skv=2026-02-06&sig=0dVYAwfIH2O9gEGuw%2BPKgZi9zzpmSQZtFdUhFWy69Lo%3D'
+          SND_URL: 'https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-8684-820e-b0a1-e4038af12e17/raw?se=2026-08-10T14%3A50%3A13Z&sp=r&sv=2026-02-06&sr=b&scid=8190b2f1-bf59-5851-aff6-1260419e172a&skoid=33096a49-a96b-4506-9fc4-04a7517f8175&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-10T13%3A02%3A13Z&ske=2026-08-11T13%3A02%3A13Z&sks=b&skv=2026-02-06&sig=LAFC6%2B0o753y6BhzHtvEnG7IY/YKleIQhu2uPJOngnY%3D'
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/ultimateryu-import
+          mkdir -p /tmp/ultimateryu-import
+          curl -L --fail --retry 5 --retry-all-errors "$SMALL_URL" -o /tmp/ultimateryu-import/small.zip
+          unzip -tq /tmp/ultimateryu-import/small.zip
+          unzip -q /tmp/ultimateryu-import/small.zip -d /tmp/ultimateryu-import/payload
+          rm -rf chars/UltimateRyu
+          mv /tmp/ultimateryu-import/payload/UltimateRyu chars/UltimateRyu
+          curl -L --fail --retry 5 --retry-all-errors "$SFF_URL" -o chars/UltimateRyu/UltimateRyu.sff
+          curl -L --fail --retry 5 --retry-all-errors "$SND_URL" -o chars/UltimateRyu/UltimateRyu.snd
+
+      - name: Registrar Ultimate Ryu no select.def
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          from pathlib import Path
+          p = Path('data/select.def')
+          text = p.read_text(encoding='utf-8')
+          if 'UltimateRyu,' in text:
+              print('Ultimate Ryu já registrado; mantendo entrada atual.')
+          else:
+              lines = text.splitlines()
+              row5 = next(i for i, line in enumerate(lines) if line.strip() == '; Row 5')
+              ultimate_ken = next(i for i in range(row5, len(lines)) if lines[i].lstrip().startswith('UltimateKen,'))
+              slot = next(i for i in range(ultimate_ken + 1, len(lines)) if lines[i].strip() == 'EMPTY')
+              lines[slot] = 'UltimateRyu, stages/Ryu.def, includestage = 0, order = 4, ordersurvival = 0'
+              p.write_text('\n'.join(lines) + '\n', encoding='utf-8', newline='')
+          PY
+
+      - name: Validar integração estática
+        shell: bash
+        run: |
+          set -euo pipefail
+          for f in UltimateRyu.def UltimateRyu.cmd UltimateRyu.cns UltimateRyu.air UltimateRyu.sff UltimateRyu.snd pal01.act common1.cns; do
+            test -f "chars/UltimateRyu/$f"
+          done
+          test $(stat -c%s chars/UltimateRyu/UltimateRyu.sff) -gt 8000000
+          test $(stat -c%s chars/UltimateRyu/UltimateRyu.snd) -gt 18000000
+          grep -q 'name = "Ultimate Ryu"' chars/UltimateRyu/UltimateRyu.def
+          grep -q 'sprite = UltimateRyu.sff' chars/UltimateRyu/UltimateRyu.def
+          grep -q '^UltimateRyu, stages/Ryu.def' data/select.def
+          grep -q 'external.script.infinitewatch' external/script/main.lua
+          sha256sum chars/UltimateRyu/* > /tmp/ultimateryu-sha256.txt
+          cat /tmp/ultimateryu-sha256.txt
+
+      - name: Registrar importação na branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > IMPORT_ULTIMATE_RYU_v1.6.1_OK.txt <<'EOF'
+          Ultimate Ryu importado para a branch storm-boss-pack-v1.6.1.
+          Identidade: Ultimate Ryu
+          Roster: order 4 / ordersurvival 0
+          Infinite Watch: não alterado
+          Bridge: não alterado
+          Stage associado: stages/Ryu.def
+          Storyboards Arcade: desativados
+          Paleta ativa: pal01.act
+          EOF
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add chars/UltimateRyu data/select.def IMPORT_ULTIMATE_RYU_v1.6.1_OK.txt
+          git commit -m 'Adiciona Ultimate Ryu ao Boss Pack v1.6.1'
+          git push origin HEAD:storm-boss-pack-v1.6.1
