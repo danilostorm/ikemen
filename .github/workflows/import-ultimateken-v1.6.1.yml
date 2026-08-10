@@ -1,0 +1,96 @@
+name: Importar Ultimate Ken v1.6.1
+
+on:
+  push:
+    branches:
+      - storm-boss-pack-v1.6.1
+    paths:
+      - '.github/workflows/import-ultimateken-v1.6.1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  importar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout da branch Boss Pack
+        uses: actions/checkout@v4
+        with:
+          ref: storm-boss-pack-v1.6.1
+          fetch-depth: 0
+
+      - name: Baixar payload do Ultimate Ken
+        shell: bash
+        env:
+          SMALL_URL: 'https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-c34c-820e-ac14-267bd70c0e44/raw?se=2026-08-10T14%3A46%3A59Z&sp=r&sv=2026-02-06&sr=b&scid=c4e3d409-7a6f-5590-ba7d-d30532dee0a8&skoid=33096a49-a96b-4506-9fc4-04a7517f8175&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-10T12%3A52%3A18Z&ske=2026-08-11T12%3A52%3A18Z&sks=b&skv=2026-02-06&sig=8xARMPC22bJIQg2CZiJG7KeqRl1w8CydN3dP9QElRRc%3D'
+          SFF_URL: 'https://sdmntprwestus.oaiusercontent.com/files/00000000-160c-8230-8a27-b2796d4bf5db/raw?se=2026-08-10T14%3A47%3A14Z&sp=r&sv=2026-02-06&sr=b&scid=cfd8c282-b17d-57b0-8bf9-029d7964a25a&skoid=33096a49-a96b-4506-9fc4-04a7517f8175&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-10T01%3A40%3A17Z&ske=2026-08-11T01%3A40%3A17Z&sks=b&skv=2026-02-06&sig=jzt1HRIjapq6diHEOXR2knePng7cD8ydFAHzvOYejCE%3D'
+          SND_URL: 'https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-621c-820e-823b-f6668081b7f8/raw?se=2026-08-10T14%3A47%3A25Z&sp=r&sv=2026-02-06&sr=b&scid=cb388408-bc66-5525-a970-c1a85ba01a58&skoid=33096a49-a96b-4506-9fc4-04a7517f8175&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-10T13%3A16%3A02Z&ske=2026-08-11T13%3A16%3A02Z&sks=b&skv=2026-02-06&sig=aNgtZK6a%2B6BdVQT7i3Y6pff8wU/IG5EX93kzwA8A1q8%3D'
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/ultimateken-import
+          mkdir -p /tmp/ultimateken-import
+          curl -L --fail --retry 5 --retry-all-errors "$SMALL_URL" -o /tmp/ultimateken-import/small.zip
+          unzip -tq /tmp/ultimateken-import/small.zip
+          unzip -q /tmp/ultimateken-import/small.zip -d /tmp/ultimateken-import/payload
+          rm -rf chars/UltimateKen
+          mv /tmp/ultimateken-import/payload/UltimateKen chars/UltimateKen
+          curl -L --fail --retry 5 --retry-all-errors "$SFF_URL" -o chars/UltimateKen/UltimateKen.sff
+          curl -L --fail --retry 5 --retry-all-errors "$SND_URL" -o chars/UltimateKen/UltimateKen.snd
+
+      - name: Registrar Ultimate Ken no select.def
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          from pathlib import Path
+          p = Path('data/select.def')
+          text = p.read_text(encoding='utf-8')
+          if 'UltimateKen,' in text:
+              print('Ultimate Ken já registrado; mantendo entrada atual.')
+          else:
+              lines = text.splitlines()
+              row5 = next(i for i, line in enumerate(lines) if line.strip() == '; Row 5')
+              evil = next(i for i in range(row5, len(lines)) if lines[i].lstrip().startswith('EvilKenSSF2Plus,'))
+              slot = next(i for i in range(evil + 1, len(lines)) if lines[i].strip() == 'EMPTY')
+              lines[slot] = 'UltimateKen, stages/Ken.def, includestage = 0, order = 4, ordersurvival = 0'
+              p.write_text('\n'.join(lines) + '\n', encoding='utf-8', newline='')
+          PY
+
+      - name: Validar integração estática
+        shell: bash
+        run: |
+          set -euo pipefail
+          for f in UltimateKen.def UltimateKen.cmd UltimateKen.cns UltimateKen.air UltimateKen.sff UltimateKen.snd pal01.act common1.cns; do
+            test -f "chars/UltimateKen/$f"
+          done
+          test $(stat -c%s chars/UltimateKen/UltimateKen.sff) -gt 5000000
+          test $(stat -c%s chars/UltimateKen/UltimateKen.snd) -gt 10000000
+          grep -q 'name = "Ultimate Ken"' chars/UltimateKen/UltimateKen.def
+          grep -q 'sprite = UltimateKen.sff' chars/UltimateKen/UltimateKen.def
+          grep -q '^UltimateKen, stages/Ken.def' data/select.def
+          grep -q 'external.script.infinitewatch' external/script/main.lua
+          sha256sum chars/UltimateKen/* > /tmp/ultimateken-sha256.txt
+          cat /tmp/ultimateken-sha256.txt
+
+      - name: Registrar importação na branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > IMPORT_ULTIMATE_KEN_v1.6.1_OK.txt <<'EOF'
+          Ultimate Ken importado para a branch storm-boss-pack-v1.6.1.
+          Identidade: Ultimate Ken
+          Roster: order 4 / ordersurvival 0
+          Infinite Watch: não alterado
+          Bridge: não alterado
+          Stage associado: stages/Ken.def
+          Storyboards Arcade: desativados
+          Paleta ativa: pal01.act
+          EOF
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add chars/UltimateKen data/select.def IMPORT_ULTIMATE_KEN_v1.6.1_OK.txt
+          git commit -m 'Adiciona Ultimate Ken ao Boss Pack v1.6.1'
+          git push origin HEAD:storm-boss-pack-v1.6.1
