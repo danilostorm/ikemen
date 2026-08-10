@@ -91,7 +91,7 @@ SFZ_FeiLong,		stages/FeiLong.def,	includestage =0,	order = 2, ordersurvival= 2
 SFZ_Vega,		stages/Vega.def,	includestage =0,	order = 3, ordersurvival= 2
 SFZ_Honda,		stages/Honda.def,	includestage =0,	order = 2, ordersurvival= 2
 EvilKenSSF2Plus, stages/Ken3.def, includestage = 0, order = 4, ordersurvival = 0
-EMPTY
+UltimateKen, stages/Ken.def, includestage = 0, order = 4, ordersurvival = 0
 EMPTY
 EMPTY
 EMPTY
