@@ -1,0 +1,22 @@
+; STORM integration wrapper for Ultimate Ryu
+[Info]
+name = "Ultimate Ryu"
+displayname = "Ultimate Ryu"
+versiondate = 09,16,2022
+mugenversion = 1.0
+author = "ELECTR0"
+pal.defaults = 1
+
+[Files]
+sprite = UltimateRyu.sff
+anim = UltimateRyu.air
+sound = UltimateRyu.snd
+cmd = UltimateRyu.cmd
+cns = UltimateRyu.cns
+stcommon = common1.cns
+st = UltimateRyu.cns
+pal1 = pal01.act
+
+[Arcade]
+intro.storyboard =
+ending.storyboard =
